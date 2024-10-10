@@ -7,7 +7,7 @@
                     aria-hidden="true"></i> Back</div>
         </div>
         <ul id="sub-menu" class="sm pixelstrap sm-vertical">
-            <li> <a href="#">clothing</a>
+            <li> <a href="#">الملابس</a>
                 <ul class="mega-menu clothing-menu">
                     <li>
                         <div class="row m-0">
@@ -15,8 +15,8 @@
                                 <div class="link-section">
                                     <h5>women's fashion</h5>
                                     <ul>
-                                        <li><a href="#">dresses</a></li>
-                                        <li><a href="#">skirts</a></li>
+                                        <li><a href="#">الفساتين</a></li>
+                                        <li><a href="#">الجيبات</a></li>
                                         <li><a href="#">westarn wear</a></li>
                                         <li><a href="#">ethic wear</a></li>
                                         <li><a href="#">sport wear</a></li>

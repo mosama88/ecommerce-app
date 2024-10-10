@@ -6,7 +6,7 @@
 <meta name="author" content="multikart">
 <link rel="icon" href="{{ asset('front') }}/assets/images/favicon/1.png" type="image/x-icon">
 <link rel="shortcut icon" href="{{ asset('front') }}/assets/images/favicon/1.png" type="image/x-icon">
-<title>Multikart - Multi-purpose E-commerce Html Template</title>
+<title>Multikart - @yield('front-title')</title>
 
 <!--Google font-->
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
@@ -20,6 +20,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('front') }}/assets/css/vendors/slick.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('front') }}/assets/css/vendors/slick-theme.css">
 
+{{-- Fonts Arabic font-family: DroidKufi-Regular; --}}
+<link href="{{ URL::asset('dashboard/assets/fonts_ar/stylesheet.css') }}" rel="stylesheet">
+
 <!-- Animate icon -->
 <link rel="stylesheet" type="text/css" href="{{ asset('front') }}/assets/css/vendors/animate.css">
 
@@ -31,5 +34,6 @@
 
 <!-- Theme css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('front') }}/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('front') }}/assets/css/font-style.css">
 
 @yield('css')

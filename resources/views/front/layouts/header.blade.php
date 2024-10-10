@@ -24,19 +24,19 @@
                                             aria-hidden="true"></i></div>
                                 </li>
                                 <li>
-                                    <a href="index.html">Home</a>
+                                    <a href="index.html">الرئيسية</a>
                                 </li>
                                 <li>
                                     <a href="#">feature<div class="lable-nav">new</div></a>
                                 </li>
                                 <li>
-                                    <a href="#">shop</a>
+                                    <a href="#">تسوق</a>
                                 </li>
                                 <li>
-                                    <a href="#">product</a>
+                                    <a href="#">المنتجات</a>
                                 </li>
                                 <li>
-                                    <a href="#">pages</a>
+                                    <a href="#">الصفحات</a>
                                 </li>
                                 <li><a href="#">blog</a>
                                 </li>
