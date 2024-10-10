@@ -19,6 +19,13 @@ Route::get('/admin/dashboards', function () {
     return view('dashboard.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
+Route::middleware(['auth:admin', 'verified'])->prefix('dashbaord')->name('dashboard.')->group(function () {
+Route::resource('categories', CategoryController::class);
+Route::resource('colors', ColorController::class);
+Route::resource('products', ProductController::class);
+Route::resource('sizes', SizeController::class);
+Route::resource('sub_categories', SubCategoryController::class);
+});
 
 
 Route::middleware('auth')->group(function () {
