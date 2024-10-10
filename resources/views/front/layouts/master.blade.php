@@ -38,14 +38,7 @@
         </div>
         <header>
 
-
-
-
-
-
-
-
-            @include('resources\views\front.layouts.header')
+            @include('front.layouts.header')
         </header>
         <div class="home-slider">
             <div class="home"></div>
