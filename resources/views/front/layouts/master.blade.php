@@ -3696,7 +3696,7 @@
 
     <!-- latest jquery-->
 
-@include('front.layouts.head')
+@include('front.layouts.js')
 </body>
 
 </html>
