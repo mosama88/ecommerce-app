@@ -23,6 +23,20 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+         DB::table('admins')->insert([
+            'id' => 1,
+            'name' => 'Mohamed Osama',
+            'username' => 'mosama',
+            'email' => 'mosama88@hotmail.com',
+            'email_verified_at' => null,
+            'password' => '$2y$10$CytAwnqWFvfL2s/iuMiuo.fNDOaOBQ7ofKEp0W6FxdhRLyLUgy5TS', // Hashed password
+            'mobile' => '01228759920',
+            'status' => 1,
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**

@@ -37,15 +37,15 @@ class AdminRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+   public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::guard('admin')->attempt($this->only('username', 'password'), $this->boolean('remember'))) {
+        if (auth('admin')->attempt($this->only('username', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'username' => trans('auth.failed'),
+                'username' => 'خطأ فى بيانات المستخدم',
             ]);
         }
 

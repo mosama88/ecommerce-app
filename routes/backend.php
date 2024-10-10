@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/dashboards', function () {
     return view('dashboard.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth:admin', 'verified'])->name('dashboard');
 
 
 
