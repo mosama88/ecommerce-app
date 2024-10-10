@@ -12,7 +12,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-        //
+                return view('dashboard.sizes.index');
+
     }
 
     /**

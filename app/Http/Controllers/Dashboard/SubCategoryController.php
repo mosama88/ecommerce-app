@@ -12,7 +12,8 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        //
+    return view('dashboard.sub_categories.index');
+
     }
 
     /**

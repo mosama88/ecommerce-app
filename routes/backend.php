@@ -1,8 +1,13 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dashboard\SizeController;
+use App\Http\Controllers\Dashboard\ColorController;
+use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +24,7 @@ Route::get('/admin/dashboards', function () {
     return view('dashboard.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
-Route::middleware(['auth:admin', 'verified'])->prefix('dashbaord')->name('dashboard.')->group(function () {
+Route::middleware(['auth:admin', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
 Route::resource('categories', CategoryController::class);
 Route::resource('colors', ColorController::class);
 Route::resource('products', ProductController::class);
