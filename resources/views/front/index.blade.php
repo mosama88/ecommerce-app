@@ -1,1 +1,2 @@
-<h1>Welcome To My WebSite</h1>
+
+@extends('front.layouts.master')
