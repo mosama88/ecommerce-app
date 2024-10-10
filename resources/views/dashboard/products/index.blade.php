@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('title','colors')
+@section('title','Products')
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('dashboard/assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
