@@ -72,10 +72,9 @@ class ColorController extends Controller
         try {
             DB::beginTransaction();
             $dataToUpdate = Color::findOrFail($id);
-            $dataToUpdate->update([
-                'name' => $request->name,
-                'updated_by' => auth()->user()->id,
-            ]);
+            $dataToUpdate['name'] = $request->name;
+            $dataToUpdate['updated_by'] = auth()->user()->id;
+            $dataToUpdate->save();
             DB::commit();
             return redirect()->back()->with(['success' => 'تم تعديل اللون بنجاح']);
         } catch (\Exception $ex) {
