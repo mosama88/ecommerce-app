@@ -67,7 +67,7 @@ class ColorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ColorUpdateRequest $request, $id)
+    public function update(ColorRequest $request, $id)
     {
         try {
             DB::beginTransaction();
