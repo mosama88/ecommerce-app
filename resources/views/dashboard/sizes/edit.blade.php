@@ -1,5 +1,5 @@
     <!-- Modal effects -->
-    <div class="modal fade edit-color" id="edit{{ $info['id'] }}">
+    <div class="modal fade edit-size" id="edit{{ $info['id'] }}">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
@@ -7,8 +7,7 @@
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="ajaxFormSizeUpdate" action="{{ route('dashboard.sizes.update', $info['id']) }}"
-                        method="POST">
+                    <form action="{{ route('dashboard.sizes.update', $info['id']) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="row">

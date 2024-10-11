@@ -7,8 +7,7 @@
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="ajaxFormColorUpdate" action="{{ route('dashboard.colors.update', $info['id']) }}"
-                        method="POST">
+                    <form action="{{ route('dashboard.colors.update', $info['id']) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -30,3 +29,6 @@
         </div>
     </div>
     <!-- End Modal effects-->
+
+
+

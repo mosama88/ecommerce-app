@@ -38,8 +38,10 @@
                 <div class="card-header pb-0">
                     @if ($errors->any())
                         @foreach ($errors->all() as $error)
-                            <div class="alert alert-danger text-center col-6">
-                                {{ $error }}
+                            <div class="alert alert-solid-danger mg-b-0 mb-4" role="alert">
+                                <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <strong>حدث خطأ!</strong> {{ $error }}
                             </div>
                         @endforeach
                     @endif
@@ -166,9 +168,16 @@
                 method: $(this).attr('method'),
                 data: formData,
                 success: function(response) {
-                    // إخفاء رسالة الخطأ عند نجاح العملية
-                    $('#nameError').text('');
-                }
+                    if (response.success) {
+                        // إخفاء الـ modal فقط عند نجاح العملية
+                        $('#modaldemo8').modal('hide');
+
+                        // إعادة تحميل الصفحة بعد انتهاء العملية مباشرة
+                        setTimeout(function() {
+                            location.reload(); // إعادة تحميل الصفحة بعد وقت محدد
+                        }, 1000); // 1000 مللي ثانية (1 ثانية)
+                    }
+                },
                 error: function(xhr) {
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
@@ -186,8 +195,5 @@
             });
         });
     </script>
-
-
-
 
 @endsection
