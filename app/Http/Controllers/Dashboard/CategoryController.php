@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\CategoryRequest;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
+     * */
     public function index()
     {
-        return view('dashboard.categories.index');
+        $com_code = auth()->user()->com_code;
+        $data = getColumnsIndex(new Category(), array("*"), array('com_code' => $com_code), 'id', 'DESC')->get();
+        return view('dashboard.categories.index', compact('data'));
     }
 
     /**
@@ -20,17 +25,32 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
-    }
+        try {
+            DB::beginTransaction();
+            $com_code = auth()->user()->com_code;
+            $dataToInsert['name'] = $request->name;
+            $dataToInsert['description'] = $request->description;
+            $dataToInsert['created_by'] = auth()->user()->id;
+            $dataToInsert['com_code'] = $com_code;
 
+
+            insert(new Category, $dataToInsert);
+
+            DB::commit();
+            return response()->json(['success' => 'تم أضافة الفئة بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+        }
+    }
     /**
      * Display the specified resource.
      */
@@ -44,7 +64,9 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $info = Category::findOrFail($id);
+        return view('dashboard.categories.edit', compact('info'));
     }
 
     /**
@@ -52,7 +74,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $com_code = auth()->user()->com_code;
+            $dataToUpadte['name'] = $request->name;
+            $dataToUpadte['description'] = $request->description;
+            $dataToUpadte['updated_by'] = auth()->user()->id;
+            $dataToUpadte['com_code'] = $com_code;
+
+
+            update(new Category, $dataToUpadte, array('com_code' => $com_code, 'id' => $id));
+
+            DB::commit();
+            return redirect()->back()->with(['success' => 'تم أضافة الفئة بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -60,6 +98,12 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $com_code = auth()->user()->com_code;
+
+        $deletesSize = Category::findOrFail($id);
+
+        destroy(new Category(),  array('com_code' => $com_code, 'id' => $id));
+
+        return redirect()->back()->with(['success' => 'تم حذف الفئة بنجاح']);
     }
 }

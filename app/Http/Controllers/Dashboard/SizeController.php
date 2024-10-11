@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use App\Helpers\GeneralHelpers;
-use App\Models\Size;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\SizeRequest;
 
 class SizeController extends Controller
 {
@@ -14,7 +16,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-        // $data = ::getDataToIndex(new Size(), [], ['id' => 'DESC']);
+        $com_code = auth()->user()->com_code;
+        $data = getColumnsIndex(new Size(), array("*"), array('com_code' => $com_code), 'id', 'DESC')->get();
         return view('dashboard.sizes.index', compact('data'));
     }
 
@@ -23,17 +26,31 @@ class SizeController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.sizes.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SizeRequest $request)
     {
-        //
-    }
+        try {
+            DB::beginTransaction();
+            $com_code = auth()->user()->com_code;
+            $dataToInsert['name'] = $request->name;
+            $dataToInsert['created_by'] = auth()->user()->id;
+            $dataToInsert['com_code'] = $com_code;
 
+
+            insert(new Size, $dataToInsert);
+
+            DB::commit();
+            return response()->json(['success' => 'تم أضافة المقاس بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+        }
+    }
     /**
      * Display the specified resource.
      */
@@ -47,7 +64,9 @@ class SizeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $info = Size::findOrFail($id);
+        return view('dashboard.sizes.edit', compact('info'));
     }
 
     /**
@@ -55,7 +74,22 @@ class SizeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $com_code = auth()->user()->com_code;
+            $dataToUpadte['name'] = $request->name;
+            $dataToUpadte['updated_by'] = auth()->user()->id;
+            $dataToUpadte['com_code'] = $com_code;
+
+
+            update(new Size, $dataToUpadte, array('com_code' => $com_code, 'id' => $id));
+
+            DB::commit();
+            return redirect()->back()->with(['success' => 'تم أضافة المقاس بنجاح']);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -63,6 +97,12 @@ class SizeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $com_code = auth()->user()->com_code;
+
+        $deletesSize = Size::findOrFail($id);
+
+        destroy(new Size(),  array('com_code' => $com_code, 'id' => $id));
+
+        return redirect()->back()->with(['success' => 'تم حذف المقاس بنجاح']);
     }
 }

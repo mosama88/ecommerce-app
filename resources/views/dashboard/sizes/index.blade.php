@@ -159,7 +159,7 @@
 
 
     <script>
-        $('#ajaxFormColor').on('submit', function(e) {
+        $('#ajaxFormSize').on('submit', function(e) {
             e.preventDefault();
 
             var formData = $(this).serialize();

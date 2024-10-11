@@ -31,7 +31,7 @@ class ColorController extends Controller
     {
         try {
             DB::beginTransaction();
-            $com_code = auth()->user()->id;
+            $com_code = auth()->user()->com_code;
             $dataToInsert['name'] = $request->name;
             $dataToInsert['created_by'] = auth()->user()->id;
             $dataToInsert['com_code'] = $com_code;
