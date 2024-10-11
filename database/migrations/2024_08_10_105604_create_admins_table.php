@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('mobile', 20);
             $table->integer('status')->default(1)->comment(' حالة الحساب تساوى واحد يكون مفعل | حالة الحساب تساوى صفر يكون غير مفعل');
+            $table->integer('com_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -34,6 +35,7 @@ return new class extends Migration
             'password' => '$2y$10$CytAwnqWFvfL2s/iuMiuo.fNDOaOBQ7ofKEp0W6FxdhRLyLUgy5TS', // Hashed password
             'mobile' => '01228759920',
             'status' => 1,
+            'com_code' => 1,
             'remember_token' => null,
             'created_at' => now(),
             'updated_at' => now(),

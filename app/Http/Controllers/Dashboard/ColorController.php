@@ -11,8 +11,8 @@ class ColorController extends Controller
 {
     public function index()
     {
-        $com_code = auth()->user()->id;
-        $data = getColumnsIndex(new Color, array("*"), array("com_code", $com_code), 'id', 'DESC');
+        $com_code = auth()->user()->com_code;
+        $data = getColumnsIndex(new Color(), array("*"), array('com_code' => $com_code), 'id', 'DESC')->get();
         return view('dashboard.colors.index', compact('data'));
     }
 
