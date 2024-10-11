@@ -1,5 +1,5 @@
 <!-- End Modal effects-->
-<div class="modal delete" id="delete{{ $info->id }}">
+<div class="modal fade delete" id="delete{{ $info->id }}">
 
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content tx-size-sm">

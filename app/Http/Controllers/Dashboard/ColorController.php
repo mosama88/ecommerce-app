@@ -4,16 +4,14 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Color;
 use Illuminate\Http\Request;
+use App\Helpers\GeneralHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ColorRequest;
-use App\Helpers\GeneralHelpers;
+use App\Http\Requests\Dashboard\ColorUpdateRequest;
 
 class ColorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $data = Color::orderBy("id", "DESC")->get();
@@ -39,7 +37,7 @@ class ColorController extends Controller
             $dataToInsert['created_by'] = auth()->user()->id;
 
 
-            GeneralHelpers::insert('colors', $dataToInsert);
+            GeneralHelpers::insert(new Color, $dataToInsert);
 
             DB::commit();
             return redirect()->back()->with(['success' => 'تم أضافة اللون بنجاح']);
@@ -69,7 +67,7 @@ class ColorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(ColorUpdateRequest $request, $id)
     {
         try {
             DB::beginTransaction();
@@ -77,7 +75,7 @@ class ColorController extends Controller
             $dataToUpdate['updated_by'] = auth()->user()->id;
 
 
-            GeneralHelpers::update('colors', $dataToUpdate, ['id' => $id]);
+            GeneralHelpers::update(new Color(), $dataToUpdate, ['id' => $id]);
 
             DB::commit();
             return redirect()->back()->with(['success' => 'تم تعديل اللون بنجاح']);
@@ -95,7 +93,9 @@ class ColorController extends Controller
         try {
             DB::beginTransaction();
             $dataToDelete = Color::findOrFail($id);
-            $dataToDelete->delete();
+
+            GeneralHelpers::delete(new Color(), $dataToDelete->id);
+
             DB::commit();
             return redirect()->back()->with(['success' => 'تم حذف : ' . $dataToDelete['name'] . " " . 'بنجاح']);
         } catch (\Exception $ex) {
