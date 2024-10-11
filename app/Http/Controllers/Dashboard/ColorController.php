@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ColorRequest;
+use App\Helpers\GeneralHelpers;
 
 class ColorController extends Controller
 {
@@ -34,11 +35,12 @@ class ColorController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataToInsert = new Color();
             $dataToInsert['name'] = $request->name;
             $dataToInsert['created_by'] = auth()->user()->id;
 
-            $dataToInsert->save();
+
+            GeneralHelpers::insert('colors', $dataToInsert);
+
             DB::commit();
             return redirect()->back()->with(['success' => 'تم أضافة اللون بنجاح']);
         } catch (\Exception $ex) {
@@ -71,10 +73,12 @@ class ColorController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataToUpdate = Color::findOrFail($id);
             $dataToUpdate['name'] = $request->name;
             $dataToUpdate['updated_by'] = auth()->user()->id;
-            $dataToUpdate->save();
+
+
+            GeneralHelpers::update('colors', $dataToUpdate, ['id' => $id]);
+
             DB::commit();
             return redirect()->back()->with(['success' => 'تم تعديل اللون بنجاح']);
         } catch (\Exception $ex) {
