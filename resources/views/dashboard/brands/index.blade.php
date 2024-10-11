@@ -63,6 +63,7 @@
                                     <tr>
                                         <th class="wd-15p border-bottom-0">#</th>
                                         <th class="wd-15p border-bottom-0">أسم المقاس</th>
+                                        <th class="wd-15p border-bottom-0">الوصف</th>
                                         <th class="wd-20p border-bottom-0">أضافة بواسطة</th>
                                         <th class="wd-15p border-bottom-0">تعديل بواسطة</th>
                                         <th class="wd-15p border-bottom-0">العمليات</th>
@@ -76,6 +77,7 @@
                                         <tr>
                                             <td>{{ $i }}</td>
                                             <td>{{ $info['name'] }}</td>
+                                            <td>{{ $info['description'] }}</td>
                                             <td>{{ $info->createdBy->name }}</td>
                                             <td>
                                                 @if ($info->updated_by > 0)

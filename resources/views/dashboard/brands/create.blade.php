@@ -15,6 +15,11 @@
                                 <input type="text" name="name" id="name" class="form-control">
                                 <span class="text-danger" id="nameError"></span> <!-- مكان عرض الخطأ -->
                             </div>
+                            <div class="form-group col-12">
+                                <label for="">وصف  العلامة التجارية</label>
+                                <textarea name="description" id="description" class="form-control" cols="30" rows="3"></textarea>
+                                <span class="text-danger" id="descriptionError"></span> <!-- مكان عرض الخطأ -->
+                            </div>
                         </div>
 
                         <div class="modal-footer">

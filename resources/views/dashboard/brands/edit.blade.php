@@ -17,7 +17,11 @@
                                     class="form-control">
                                 <span class="text-danger" id="nameError"></span> <!-- مكان عرض الخطأ -->
                             </div>
-
+                            <div class="form-group col-12">
+                                <label for="">وصف  العلامة التجارية</label>
+                                <textarea name="description" id="description" class="form-control" cols="30" rows="3">{{ $info['description'] }}</textarea>
+                                <span class="text-danger" id="descriptionError"></span> <!-- مكان عرض الخطأ -->
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button class="btn ripple btn-primary" type="submit">تأكيد البيانات</button>
