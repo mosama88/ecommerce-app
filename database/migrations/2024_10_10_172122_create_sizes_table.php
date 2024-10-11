@@ -19,6 +19,16 @@ return new class extends Migration
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->timestamps();
         });
+        // الأحجام مع التفاصيل باللغة العربية
+        $sizes = [
+            ['name' => 'S', 'created_by' => 1, 'com_code' => 1],
+            ['name' => 'M', 'created_by' => 1, 'com_code' => 1],
+            ['name' => 'L', 'created_by' => 1, 'com_code' => 1],
+            ['name' => 'XL', 'created_by' => 1, 'com_code' => 1],
+            ['name' => 'XXL', 'created_by' => 1, 'com_code' => 1],
+            ['name' => 'XXXL', 'created_by' => 1, 'com_code' => 1],
+
+        ];
     }
 
     /**
