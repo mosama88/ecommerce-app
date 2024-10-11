@@ -94,10 +94,12 @@ class ColorController extends Controller
     public function destroy(string $id)
     {
         try {
+            $com_code = auth()->user()->com_code;
+
             DB::beginTransaction();
             $dataToDelete = Color::findOrFail($id);
 
-            destroy(new Color(), $dataToDelete->id);
+            destroy(new Color(),  array('id' => $id));
 
             DB::commit();
             return redirect()->back()->with(['success' => 'تم حذف : ' . $dataToDelete['name'] . " " . 'بنجاح']);
