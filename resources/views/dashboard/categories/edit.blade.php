@@ -7,7 +7,8 @@
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="ajaxFormCategory" action="{{ route('dashboard.categories.update') }}" method="POST">
+                    <form id="ajaxFormCategory" action="{{ route('dashboard.categories.update', $info['id']) }}"
+                        method="POST">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -17,9 +18,10 @@
                                     class="form-control">
                                 <span class="text-danger" id="nameError"></span> <!-- مكان عرض الخطأ -->
                             </div>
+
                             <div class="form-group col-12">
                                 <label for="">وصف الفئة</label>
-                                <textarea name="description" id="description" cols="30" rows="10">{{ $info['description'] }}</textarea>
+                                <textarea name="description" id="description" class="form-control" cols="30" rows="3">{{ $info['description'] }}</textarea>
                                 <span class="text-danger" id="descriptionError"></span> <!-- مكان عرض الخطأ -->
                             </div>
                         </div>

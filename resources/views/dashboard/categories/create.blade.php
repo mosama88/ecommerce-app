@@ -17,7 +17,7 @@
                             </div>
                             <div class="form-group col-12">
                                 <label for="">وصف الفئة</label>
-                                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                                <textarea name="description" id="description" class="form-control" cols="30" rows="3"></textarea>
                                 <span class="text-danger" id="descriptionError"></span> <!-- مكان عرض الخطأ -->
                             </div>
                         </div>
