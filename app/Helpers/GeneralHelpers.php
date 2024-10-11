@@ -9,6 +9,7 @@ function getColumnsIndex($model, $Columns_name = array(), $where = array(), $ord
     return $data;
 }
 
+
 ####################################################################
 
 /*get some cols  table */
@@ -25,11 +26,20 @@ function insert($model = null, $arrayToInsert = array(), $returnData = false)
 {
     $flag = $model::create($arrayToInsert);
     if ($returnData == true) {
-        $data = get_Columns_where_row($model, array("*"), $arrayToInsert);
+        $data = get_cols_where_row($model, array("*"), $arrayToInsert);
         return $data;
     } else {
         return $flag;
     }
+}
+
+####################################################################
+
+/*get some cols for one row on table */
+function get_cols_where_row($model = null, $columns_names = array(), $where = array())
+{
+    $data = $model::select($columns_names)->where($where)->first();
+    return $data;
 }
 
 ####################################################################
@@ -95,14 +105,6 @@ function get_cols($model = null, $columns_names = array(), $order_field = "id", 
     return $data;
 }
 
-####################################################################
-
-/*get some cols for one row on table */
-function get_Columns_where_row($model = null, $columns_names = array(), $where = array())
-{
-    $data = $model::select($columns_names)->where($where)->first();
-    return $data;
-}
 
 ####################################################################
 
