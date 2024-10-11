@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('colors', function (Blueprint $table) {
                 $table->id();
             $table->string('name',50);
+            $table->integer('com_code');
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->timestamps();

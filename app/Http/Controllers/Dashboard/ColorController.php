@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Color;
-use Illuminate\Http\Request;
-use App\Helpers\GeneralHelpers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ColorRequest;
-use App\Http\Requests\Dashboard\ColorUpdateRequest;
 
 class ColorController extends Controller
 {
     public function index()
     {
-        $data = Color::orderBy("id", "DESC")->get();
+        $com_code = auth()->user()->id;
+        $data = getColumnsIndex(new Color, array("*"), array("com_code", $com_code), 'id', 'DESC');
         return view('dashboard.colors.index', compact('data'));
     }
 
@@ -33,11 +31,13 @@ class ColorController extends Controller
     {
         try {
             DB::beginTransaction();
+            $com_code = auth()->user()->id;
             $dataToInsert['name'] = $request->name;
             $dataToInsert['created_by'] = auth()->user()->id;
+            $dataToInsert['com_code'] = $com_code;
 
 
-            GeneralHelpers::insert(new Color, $dataToInsert);
+            insert(new Color, $dataToInsert);
 
             DB::commit();
             return response()->json(['success' => 'تم أضافة اللون بنجاح']);
@@ -70,12 +70,15 @@ class ColorController extends Controller
     public function update(ColorRequest $request, $id)
     {
         try {
+            $com_code = auth()->user()->com_code;
+
             DB::beginTransaction();
             $dataToUpdate['name'] = $request->name;
             $dataToUpdate['updated_by'] = auth()->user()->id;
+            $dataToUpdate['com_code'] = $com_code;
 
 
-            GeneralHelpers::update(new Color(), $dataToUpdate, ['id' => $id]);
+            update(new Color(), $dataToUpdate, ['id' => $id]);
 
             DB::commit();
             return redirect()->back()->with(['success' => 'تم تعديل اللون بنجاح']);
@@ -94,7 +97,7 @@ class ColorController extends Controller
             DB::beginTransaction();
             $dataToDelete = Color::findOrFail($id);
 
-            GeneralHelpers::delete(new Color(), $dataToDelete->id);
+            destroy(new Color(), $dataToDelete->id);
 
             DB::commit();
             return redirect()->back()->with(['success' => 'تم حذف : ' . $dataToDelete['name'] . " " . 'بنجاح']);

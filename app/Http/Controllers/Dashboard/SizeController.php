@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helpers\GeneralHelpers;
+use App\Models\Size;
 
 class SizeController extends Controller
 {
@@ -12,8 +14,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-                return view('dashboard.sizes.index');
-
+        // $data = ::getDataToIndex(new Size(), [], ['id' => 'DESC']);
+        return view('dashboard.sizes.index', compact('data'));
     }
 
     /**
