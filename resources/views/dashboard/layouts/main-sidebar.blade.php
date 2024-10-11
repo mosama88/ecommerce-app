@@ -30,8 +30,8 @@
         <ul class="side-menu">
             <li class="side-item side-item-category">Main</li>
             <li class="slide">
-                <a class="side-menu__item" href="{{ url('/' . ($page = 'index')) }}"><svg xmlns="http://www.w3.org/2000/svg"
-                        class="side-menu__icon" viewBox="0 0 24 24">
+                <a class="side-menu__item" href="{{ url('/' . ($page = 'index')) }}"><svg
+                        xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z" opacity=".3" />
                         <path
@@ -41,35 +41,41 @@
             </li>
 
 
-            <li class="side-item side-item-category">Settings</li>
-            <li class="slide {{ request()->is('colors*') | request()->is('sizes*') ? 'menu-open' : '' }}">
-                <a class="side-menu__item {{ request()->is('colors*') | request()->is('sizes*') ? 'active' : '' }}"
+            <li class="side-item side-item-category">قائمة الأعدادت</li>
+            <li
+                class="slide {{ request()->is('colors*') | request()->is('sizes*') | request()->is('categories*') | request()->is('sub_categories*') | request()->is('brands*') ? 'menu-open' : '' }}">
+                <a class="side-menu__item {{ request()->is('colors*') | request()->is('sizes*') | request()->is('categories*') | request()->is('sub_categories*') | request()->is('brands*') ? 'active' : '' }}"
                     data-toggle="slide" href="{{ url('/' . ($page = '#')) }}"><svg xmlns="http://www.w3.org/2000/svg"
                         class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path d="M6.26 9L12 13.47 17.74 9 12 4.53z" opacity=".3" />
                         <path
                             d="M19.37 12.8l-7.38 5.74-7.37-5.73L3 14.07l9 7 9-7zM12 2L3 9l1.63 1.27L12 16l7.36-5.73L21 9l-9-7zm0 11.47L6.26 9 12 4.53 17.74 9 12 13.47z" />
-                    </svg><span class="side-menu__label">Settings</span><i class="angle fe fe-chevron-down"></i></a>
+                    </svg><span class="side-menu__label">الأعدادت</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ route('dashboard.colors.index') }}">Color</a></li>
-                    <li><a class="slide-item" href="{{ route('dashboard.sizes.index') }}">Size</a></li>
+                    <li><a class="slide-item" href="{{ route('dashboard.colors.index') }}">الألوان</a></li>
+                    <li><a class="slide-item" href="{{ route('dashboard.sizes.index') }}">المقاسات</a></li>
+                    <li><a class="slide-item" href="{{ route('dashboard.categories.index') }}">الفئات</a></li>
+                    <li><a class="slide-item" href="{{ route('dashboard.sub_categories.index') }}">الفئات الفرعية</a>
+                    </li>
+                    <li><a class="slide-item" href="{{ route('dashboard.brands.index') }}">العلامات التجارية</a>
+                    </li>
                 </ul>
             </li>
 
 
-            <li class="side-item side-item-category">Product List</li>
+            <li class="side-item side-item-category">قائمة المنتجات</li>
             <li class="slide {{ request()->is('products*') ? 'menu-open' : '' }}">
                 <a class="side-menu__item {{ request()->is('products*') ? 'active' : '' }}" data-toggle="slide"
-                    href="{{ url('/' . ($page = '#')) }}"><svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon"
-                        viewBox="0 0 24 24">
+                    href="{{ url('/' . ($page = '#')) }}"><svg xmlns="http://www.w3.org/2000/svg"
+                        class="side-menu__icon" viewBox="0 0 24 24">
                         <path d="M0 0h24v24H0V0z" fill="none" />
                         <path d="M6.26 9L12 13.47 17.74 9 12 4.53z" opacity=".3" />
                         <path
                             d="M19.37 12.8l-7.38 5.74-7.37-5.73L3 14.07l9 7 9-7zM12 2L3 9l1.63 1.27L12 16l7.36-5.73L21 9l-9-7zm0 11.47L6.26 9 12 4.53 17.74 9 12 13.47z" />
-                    </svg><span class="side-menu__label">Products</span><i class="angle fe fe-chevron-down"></i></a>
+                    </svg><span class="side-menu__label">المنتجات</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ route('dashboard.products.index') }}">Products</a></li>
+                    <li><a class="slide-item" href="{{ route('dashboard.products.index') }}">المنتجات</a></li>
                 </ul>
             </li>
 
@@ -150,11 +156,13 @@
                     </svg><span class="side-menu__label">Apps</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'cards')) }}">Cards</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'darggablecards')) }}">Darggablecards</a></li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'darggablecards')) }}">Darggablecards</a>
+                    </li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'rangeslider')) }}">Range-slider</a></li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'calendar')) }}">Calendar</a></li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'contacts')) }}">Contacts</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'image-compare')) }}">Image-compare</a></li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'image-compare')) }}">Image-compare</a>
+                    </li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'notification')) }}">Notification</a></li>
                     <li><a class="slide-item"
                             href="{{ url('/' . ($page = 'widget-notification')) }}">Widget-notification</a></li>
@@ -234,7 +242,8 @@
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'mail')) }}">Mail</a></li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'mail-compose')) }}">Mail Compose</a></li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'mail-read')) }}">Read-mail</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'mail-settings')) }}">mail-settings</a></li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'mail-settings')) }}">mail-settings</a>
+                    </li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'chat')) }}">Chat</a></li>
                 </ul>
             </li>
@@ -247,8 +256,10 @@
                             d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
                     </svg><span class="side-menu__label">Forms</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'form-elements')) }}">Form Elements</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'form-advanced')) }}">Advanced Forms</a></li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'form-elements')) }}">Form Elements</a>
+                    </li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'form-advanced')) }}">Advanced Forms</a>
+                    </li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'form-layouts')) }}">Form Layouts</a></li>
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'form-validation')) }}">Form Validation</a>
                     </li>

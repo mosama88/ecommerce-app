@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\SizeController;
+use App\Http\Controllers\Dashboard\BrandController;
 use App\Http\Controllers\Dashboard\ColorController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\CategoryController;
@@ -30,6 +32,7 @@ Route::resource('colors', ColorController::class);
 Route::resource('products', ProductController::class);
 Route::resource('sizes', SizeController::class);
 Route::resource('sub_categories', SubCategoryController::class);
+Route::resource('brands', BrandController::class);
 });
 
 
