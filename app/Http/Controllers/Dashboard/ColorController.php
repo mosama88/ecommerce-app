@@ -40,7 +40,7 @@ class ColorController extends Controller
             GeneralHelpers::insert(new Color, $dataToInsert);
 
             DB::commit();
-            return redirect()->back()->with(['success' => 'تم أضافة اللون بنجاح']);
+            return response()->json(['success' => 'تم أضافة اللون بنجاح']);
         } catch (\Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();

@@ -31,7 +31,8 @@
 @endsection
 @section('content')
     @include('dashboard.messages_alert')
-    <!-- row -->
+
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -157,43 +158,54 @@
     </script>
 
 
-    <script>
-        $('#ajaxFormColor').on('submit', function(e) {
-            e.preventDefault();
+<script>
+    $('#ajaxFormColor').on('submit', function(e) {
+    e.preventDefault();
 
-            var formData = $(this).serialize();
+    var formData = $(this).serialize();
 
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: formData,
-                success: function(response) {
-                    if (response.success) {
-                        // إخفاء الـ modal فقط عند نجاح العملية
-                        $('#modaldemo8').modal('hide');
+    $.ajax({
+        url: $(this).attr('action'),
+        method: $(this).attr('method'),
+        data: formData,
+        success: function(response) {
+            if (response.success) {
+                // إخفاء الـ modal فقط عند نجاح العملية
+                $('#modaldemo8').modal('hide');
 
-                        // إعادة تحميل الصفحة بعد انتهاء العملية مباشرة
-                        setTimeout(function() {
-                            location.reload(); // إعادة تحميل الصفحة بعد وقت محدد
-                        }, 1000); // 1000 مللي ثانية (1 ثانية)
-                    }
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        var errors = xhr.responseJSON.errors;
-                        if (errors.name) {
-                            $('#nameError').text(errors.name[0]);
-                        }
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'حدث خطأ',
-                            text: 'عفوا حدث خطأ ما. الرجاء المحاولة مرة أخرى.'
-                        });
-                    }
+                // عرض رسالة النجاح
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم أضافة اللون بنجاح',
+                    text: response.success,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+
+                // إعادة تحميل الصفحة بعد انتهاء العملية مباشرة
+                setTimeout(function() {
+                    location.reload(); // إعادة تحميل الصفحة بعد وقت محدد
+                }, 1000); // 1000 مللي ثانية (1 ثانية)
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON.errors;
+                if (errors.name) {
+                    $('#nameError').text(errors.name[0]);
                 }
-            });
-        });
-    </script>
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'حدث خطأ',
+                    text: 'عفوا حدث خطأ ما. الرجاء المحاولة مرة أخرى.'
+                });
+            }
+        }
+    });
+});
+
+</script>
 
 @endsection
