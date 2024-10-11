@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',50);
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
-            $table->foreignId('updated_by')->references('id')->on('admins')->onUpdate('cascade');
+            $table->foreignId('updated_by')->references('id')->on('admins')->onUpdate('cascade')->nullable();
             $table->timestamps();
         });
     }

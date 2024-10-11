@@ -11,7 +11,7 @@ class ColorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class ColorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:50|unique:colors,name',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'حقل أسم اللون مطلوب',
+            'name.max' => 'اسم اللون لا يتجاوز 50 حرف',
+            'name.unique' => 'أسم اللون موجود بالفعل',
         ];
     }
 }

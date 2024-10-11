@@ -21,3 +21,11 @@
 <link href="{{ URL::asset('dashboard/assets/css-rtl/style-dark.css') }}" rel="stylesheet">
 <!---Skinmodes css-->
 <link href="{{ URL::asset('dashboard/assets/css-rtl/skin-modes.css') }}" rel="stylesheet">
+
+
+<!--Internal   Notify -->
+<link href="{{ asset('dashboard') }}/assets/plugins/notify/css/notifIt.css" rel="stylesheet" />
+
+
+<!--- sweetalert2 css -->
+<link href="{{ URL::asset('dashboard/assets/css/sweetalert2.min.css') }}" rel="stylesheet">

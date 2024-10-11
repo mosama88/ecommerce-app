@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sub_categories', function (Blueprint $table) {
-              $table->id();
-                    $table->foreignId('category_id')->references('id')->on('categories')->onUpdate('cascade');
-              $table->string('name',50);
-            $table->string('description',200);
+            $table->id();
+            $table->foreignId('category_id')->references('id')->on('categories')->onUpdate('cascade');
+            $table->string('name', 50);
+            $table->string('description', 200);
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
-            $table->foreignId('updated_by')->references('id')->on('admins')->onUpdate('cascade');
+            $table->foreignId('updated_by')->references('id')->on('admins')->onUpdate('cascade')->nullable();
             $table->timestamps();
         });
     }
