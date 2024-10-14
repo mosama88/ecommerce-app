@@ -11,4 +11,20 @@ class SubCategory extends Model
       protected $table ='sub_categories';
 
    protected $guarded = [];
+
+   
+   public function createdBy()
+   {
+       return $this->belongsTo(Admin::class, 'created_by');
+   }
+
+   public function updatedBy()
+   {
+       return $this->belongsTo(Admin::class, 'updated_by');
+   }
+
+   public function category()
+   {
+       return $this->belongsTo( Category::class, 'category_id');
+   }
 }

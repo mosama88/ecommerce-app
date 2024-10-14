@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->references('id')->on('categories')->onUpdate('cascade');
+            $table->foreignId(column: 'category_id')->references('id')->on('categories')->onUpdate('cascade');
             $table->string('name', 50);
             $table->string('description', 200);
             $table->integer('com_code');

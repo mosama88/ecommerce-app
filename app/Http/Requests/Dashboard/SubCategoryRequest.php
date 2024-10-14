@@ -6,12 +6,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SubCategoryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +19,16 @@ class SubCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:50|unique:colors,name',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'حقل أسم الفئة مطلوب',
+            'name.max' => 'اسم الفئة لا يتجاوز 50 حرف',
+            'name.unique' => 'أسم الفئة موجود بالفعل',
         ];
     }
 }
