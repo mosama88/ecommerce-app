@@ -28,10 +28,10 @@
 
                                         <option value="" selected>-- أختر الفرع --</option>
                                         @if (@isset($other['categories']) && !@empty($other['categories']))
-                                            @foreach ($other['categories'] as $info)
-                                                <option @if (old('category_id') == $info->id) selected="selected" @endif
-                                                    value="{{ $info->id }}">
-                                                    {{ $info->name }} </option>
+                                            @foreach ($other['categories'] as $cat)
+                                                <option @if (old('category_id',$info->category_id) == $cat->id) selected="selected" @endif
+                                                    value="{{ $cat->id }}">
+                                                    {{ $cat->name }} </option>
                                             @endforeach
                                         @endif
                                     </select>

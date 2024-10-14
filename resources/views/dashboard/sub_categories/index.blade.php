@@ -139,6 +139,8 @@
     <!--Internal  Datatable js -->
     <script src="{{ URL::asset('dashboard/assets/js/table-data.js') }}"></script>
 
+<script src="{{ URL::asset('dashboard/assets/js/projects/sweetalert2.min.js') }}"></script>
+
 
     <!--Internal  Datepicker js -->
     <script src="{{ URL::asset('dashboard/assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
@@ -199,10 +201,7 @@
                         if (errors.category_id) {
                             $('#category_idError').text(errors.category_id[0]);
                         }
-                        elseif(errors.category_id) {
-                            $('#category_idError').text(errors.category_id[0]);
-
-                        }
+                        
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -212,7 +211,8 @@
                     }
                 }
             });
-        });
+            });
+
     </script>
 
 @endsection
