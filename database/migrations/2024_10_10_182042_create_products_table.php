@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('title',300);
             $table->text('description',3000);
             $table->decimal('price',10,2);
+            $table->decimal('discount_percentage',10,2);
+            $table->decimal('after_discount',10,2);
             $table->integer('qty');
+            $table->string('sku');
             $table->foreignId('category_id')->nullable()->references('id')->on('categories')->onUpdate('cascade');
             $table->foreignId('size_id')->nullable()->references('id')->on('sizes')->onUpdate('cascade');
             $table->foreignId('color_id')->nullable()->references('id')->on('colors')->onUpdate('cascade'); 
