@@ -7,7 +7,7 @@
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="ajaxFormCategory" action="{{ route('dashboard.sub_categories.update', $info['id']) }}"
+                    <form id="ajaxFormSubCategory" action="{{ route('dashboard.sub_categories.update', $info['id']) }}"
                         method="POST">
                         @csrf
                         @method('PUT')
@@ -17,6 +17,27 @@
                                 <input type="text" name="name" id="name" value="{{ $info['name'] }}"
                                     class="form-control">
                                 <span class="text-danger" id="nameError"></span> <!-- مكان عرض الخطأ -->
+                            </div>
+
+                            {{-- category_id Input --}}
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group">
+                                    <label> أختيار الفئة</label> <span class="tx-danger">*</span>
+                                    <select name="category_id" id="category_id" class="form-control select2"
+                                        style="width:100%">
+
+                                        <option value="" selected>-- أختر الفرع --</option>
+                                        @if (@isset($other['categories']) && !@empty($other['categories']))
+                                            @foreach ($other['categories'] as $info)
+                                                <option @if (old('category_id') == $info->id) selected="selected" @endif
+                                                    value="{{ $info->id }}">
+                                                    {{ $info->name }} </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <div id="category_id-error" class="text-danger error-message d-none">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group col-12">

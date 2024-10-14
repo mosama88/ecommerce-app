@@ -42,15 +42,16 @@ class SubCategoryController extends Controller
             DB::beginTransaction();
             $com_code = auth()->user()->com_code;
             $dataToInsert['name'] = $request->name;
+            $dataToInsert['category_id'] = $request->category_id;
             $dataToInsert['description'] = $request->description;
             $dataToInsert['created_by'] = auth()->user()->id;
             $dataToInsert['com_code'] = $com_code;
-
+            
 
             insert(new SubCategory, $dataToInsert);
 
             DB::commit();
-            return response()->json(['success' => 'تم أضافة الفئة بنجاح']);
+            return response()->json(['success' => 'تم أضافة الفئة الفرعية بنجاح']);
         } catch (\Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
@@ -84,6 +85,7 @@ class SubCategoryController extends Controller
             DB::beginTransaction();
             $com_code = auth()->user()->com_code;
             $dataToUpadte['name'] = $request->name;
+            $dataToUpadte['category_id'] = $request->category_id;
             $dataToUpadte['description'] = $request->description;
             $dataToUpadte['updated_by'] = auth()->user()->id;
             $dataToUpadte['com_code'] = $com_code;

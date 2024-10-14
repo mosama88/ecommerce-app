@@ -63,6 +63,7 @@
                                     <tr>
                                         <th class="wd-15p border-bottom-0">#</th>
                                         <th class="wd-15p border-bottom-0">أسم الفئة الفرعية</th>
+                                        <th class="wd-15p border-bottom-0">أسم الفئة</th>
                                         <th class="wd-15p border-bottom-0">وصف الفئة الفرعية</th>
                                         <th class="wd-20p border-bottom-0">أضافة بواسطة</th>
                                         <th class="wd-15p border-bottom-0">تعديل بواسطة</th>
@@ -77,6 +78,7 @@
                                         <tr>
                                             <td>{{ $i }}</td>
                                             <td>{{ $info['name'] }}</td>
+                                            <td>{{ $info->category->name }}</td>
                                             <td>{{ $info['description'] }}</td>
                                             <td>{{ $info->createdBy->name }}</td>
                                             <td>
@@ -194,8 +196,12 @@
                 error: function(xhr) {
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
-                        if (errors.name) {
-                            $('#nameError').text(errors.name[0]);
+                        if (errors.category_id) {
+                            $('#category_idError').text(errors.category_id[0]);
+                        }
+                        elseif(errors.category_id) {
+                            $('#category_idError').text(errors.category_id[0]);
+
                         }
                     } else {
                         Swal.fire({

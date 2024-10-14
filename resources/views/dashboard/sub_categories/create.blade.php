@@ -33,7 +33,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    <div id="branch_id-error" class="text-danger error-message d-none">
+                                    <div id="category_id-error" class="text-danger error-message d-none">
                                     </div>
                                 </div>
                             </div>
