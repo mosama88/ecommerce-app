@@ -24,4 +24,11 @@ class Category extends Model
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+
+    // داخل نموذج Category
+public function subCategories()
+{
+    return $this->hasMany(SubCategory::class);
+}
+
 }
