@@ -25,7 +25,7 @@
                                     <div class="link-section">
                                         <ul>
                                             <li>
-                                                <a href="#">{{ $sub_cat->name }}</a>
+                                                <a href="{{ $sub_cat->id }}">{{ $sub_cat->name }}</a>
                                             </li>
                                         </ul>
                                     </div>
