@@ -28,9 +28,9 @@ protected $guarded = [];
         return $this->belongsTo(Admin::class, 'updated_by');
     }
 
-       public function category()
+       public function subCategory()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'sub_category_id');
     }
 
          public function size()

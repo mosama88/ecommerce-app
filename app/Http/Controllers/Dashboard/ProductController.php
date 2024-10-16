@@ -12,8 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-                return view('dashboard.products.index');
-
+        return view('dashboard.products.index');
     }
 
     /**
@@ -21,7 +20,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.products.create');
+
     }
 
     /**
