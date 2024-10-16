@@ -72,11 +72,10 @@
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" class="form-control"
                                     id="exampleInputdiscount_percentage">
                             </div>
-                            <div class="form-group col-4 mb-3">
+                            <div class="form-group col-4 mb-3 related_Price">
                                 <label for="exampleInputafter_discount">السعر بعد الخصم</label>
-                                <input type="text" name="after_discount" id="after_discount" value="0"
-                                    class="form-control" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                    id="exampleInputafter_discount">
+                                <input readonly type="text" name="after_discount" id="after_discount" value="0"
+                                    class="form-control" id="exampleInputafter_discount">
                             </div>
                         </div>
 
@@ -95,14 +94,18 @@
                         </div>
 
                         <div class="row">
+
                             <div class="form-group col-6 mb-3">
                                 <label for="">المنتج الفرعى</label>
                                 <select name="sub_category_id" id="sub_category_id" class="form-control select2">
-                                    <!--placeholder-->
                                     <option value="" selected>أختر المنتج الفرعى</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
+                                    @if (!@empty($other['sub_categories']) && @isset($other['sub_categories']))
+                                        @foreach ($other['sub_categories'] as $sub_cat)
+                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
                                 </select>
                             </div>
 
@@ -111,9 +114,13 @@
                                 <select name="size_id" id="size_id" class="form-control select2">
                                     <!--placeholder-->
                                     <option value="" selected>أختر المقاس</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
+                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
+                                        @foreach ($other['sizes'] as $sub_cat)
+                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
                                 </select>
                             </div>
 
@@ -123,9 +130,13 @@
                                 <select name="color_id" id="color_id" class="form-control select2">
                                     <!--placeholder-->
                                     <option value="" selected>أختر اللون</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
+                                     @if (!@empty($other['colors']) && @isset($other['colors']))
+                                        @foreach ($other['colors'] as $sub_cat)
+                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
                                 </select>
                             </div>
 
@@ -135,9 +146,13 @@
                                 <select name="brand_id" id="brand_id" class="form-control select2">
                                     <!--placeholder-->
                                     <option value="" selected>أختر العلامة التجارية</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
+                                     @if (!@empty($other['brands']) && @isset($other['brands']))
+                                        @foreach ($other['brands'] as $sub_cat)
+                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -187,4 +202,30 @@
     <!-- Internal TelephoneInput js-->
     <script src="{{ URL::asset('dashboard/assets/plugins/telephoneinput/telephoneinput.js') }}"></script>
     <script src="{{ URL::asset('dashboard/assets/plugins/telephoneinput/inttelephoneinput.js') }}"></script>
+
+    <script>
+        $(document).on('input', '#price, #discount_percentage', function(e) {
+            var price = parseFloat($("#price").val()) || 0; // تحويل السعر إلى float أو استخدام 0 كقيمة افتراضية
+            var discount_percentage = parseFloat($("#discount_percentage").val()) ||
+                0; // تحويل نسبة الخصم إلى float أو استخدام 0 كقيمة افتراضية
+
+            if (discount_percentage < 0) {
+                $("#discount_percentage").val(0); // منع نسبة الخصم السالبة
+                discount_percentage = 0;
+            }
+
+            if (discount_percentage > 100) {
+                $("#discount_percentage").val(100); // منع تجاوز نسبة الخصم 100%
+                discount_percentage = 100;
+            }
+
+            // حساب السعر بعد الخصم
+            var after_discount = price * (1 - (discount_percentage / 100));
+
+            // عرض السعر بعد الخصم
+            $("#after_discount").val(after_discount.toFixed(2));
+        });
+    </script>
+
 @endsection
+{{-- after_discount = price*discount_percentage --}}

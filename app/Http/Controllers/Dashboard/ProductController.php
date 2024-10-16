@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Size;
+use App\Models\Brand;
+use App\Models\Color;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -20,7 +24,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create');
+        $other['sub_categories'] = SubCategory::get();
+        $other['brands'] = Brand::get();
+        $other['colors'] = Color::get();
+        $other['sizes'] = Size::get();
+        return view('dashboard.products.create',compact('other'));
 
     }
 
