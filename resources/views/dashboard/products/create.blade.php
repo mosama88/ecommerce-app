@@ -38,13 +38,14 @@
         {{-- Form Products --}}
 
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-            <div class="card  box-shadow-0 ">
+            <div class="card box-shadow-0 ">
                 <div class="card-header text-center">
                     <h4 class="card-title mb-1">أضف منتج</h4>
                     {{-- <p class="mb-2">It is Very Easy to Customize and it uses in your website apllication.</p> --}}
                 </div>
                 <div class="card-body pt-0">
-                    <form>
+                    <form action="{{ route('dashboard.products.store') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group mb-3">
@@ -114,7 +115,7 @@
                                 <select name="size_id" id="size_id" class="form-control select2">
                                     <!--placeholder-->
                                     <option value="" selected>أختر المقاس</option>
-                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
+                                    @if (!@empty($other['sizes']) && @isset($other['sizes']))
                                         @foreach ($other['sizes'] as $sub_cat)
                                             <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
                                         @endforeach
@@ -130,7 +131,7 @@
                                 <select name="color_id" id="color_id" class="form-control select2">
                                     <!--placeholder-->
                                     <option value="" selected>أختر اللون</option>
-                                     @if (!@empty($other['colors']) && @isset($other['colors']))
+                                    @if (!@empty($other['colors']) && @isset($other['colors']))
                                         @foreach ($other['colors'] as $sub_cat)
                                             <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
                                         @endforeach
@@ -146,7 +147,7 @@
                                 <select name="brand_id" id="brand_id" class="form-control select2">
                                     <!--placeholder-->
                                     <option value="" selected>أختر العلامة التجارية</option>
-                                     @if (!@empty($other['brands']) && @isset($other['brands']))
+                                    @if (!@empty($other['brands']) && @isset($other['brands']))
                                         @foreach ($other['brands'] as $sub_cat)
                                             <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
                                         @endforeach
