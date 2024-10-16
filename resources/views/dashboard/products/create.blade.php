@@ -59,12 +59,12 @@
                             <div class="col-12">
                                 <div class="form-group mb-3">
                                     <label for="exampleInputTtile">عنوان المنتج</label>
-                                    <input type="text" name="title" id="title" class="form-control"
-                                        id="exampleInputTtile" placeholder="أدخل وصف المنتج">
+                                    <input type="text" value="{{ old('title') }}" name="title" id="title"
+                                        class="form-control" id="exampleInputTtile" placeholder="أدخل وصف المنتج">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="">وصف المنتج</label>
-                                    <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3"></textarea>
+                                    <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3">{{ old('description') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -72,13 +72,13 @@
                         <div class="row">
                             <div class="form-group col-4 mb-3">
                                 <label for="exampleInputprice">سعر المنتج</label>
-                                <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="price"
+                                <input value="{{ old('price') }}" type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="price"
                                     id="price" class="form-control" id="exampleInputprice"
                                     placeholder="أدخل سعر المنتج">
                             </div>
                             <div class="form-group col-4 mb-3">
                                 <label for="exampleInputdiscount_percentage">نسبة الخصم %</label>
-                                <input type="number" name="discount_percentage" value="0" id="discount_percentage"
+                                <input value="{{ old('discount_percentage') }}" type="number" name="discount_percentage" value="0" id="discount_percentage"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" class="form-control"
                                     id="exampleInputdiscount_percentage">
                             </div>
@@ -92,12 +92,12 @@
                         <div class="row">
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputqty">عدد المنتج</label>
-                                <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="qty"
+                                <input value="{{ old('qty') }}" type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="qty"
                                     id="qty" class="form-control" id="exampleInputqty" placeholder="أدخل عدد المنتج">
                             </div>
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputsku">رقم المنتج</label>
-                                <input type="text" name="sku" id="sku" class="form-control"
+                                <input value="{{ old('sku') }}" type="text" name="sku" id="sku" class="form-control"
                                     id="exampleInputsku" placeholder="أدخل رقم المنتج">
                             </div>
 

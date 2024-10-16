@@ -21,7 +21,10 @@ class ProductController extends Controller
     
     public function index()
     {
-        return view('dashboard.products.index');
+        $com_code = auth()->user()->com_code;
+
+        $data = getColumnsIndex(new Product(), array("*"), array('com_code' => $com_code), 'id', 'DESC')->get();
+        return view('dashboard.products.index',compact('data'));
     }
 
     /**
@@ -94,7 +97,12 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $info = Product::findOrFail($id);
+        $other['sub_categories'] = SubCategory::get();
+        $other['brands'] = Brand::get();
+        $other['colors'] = Color::get();
+        $other['sizes'] = Size::get();
+        return view('dashboard.products.edit',compact('other','info'));
     }
 
     /**
