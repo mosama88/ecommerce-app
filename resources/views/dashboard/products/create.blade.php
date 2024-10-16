@@ -12,6 +12,15 @@
     <link rel="stylesheet" href="{{ URL::asset('dashboard/assets/plugins/sumoselect/sumoselect-rtl.css') }}">
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('dashboard/assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
+
+    <style>
+        #imagePreview img {
+            max-width: 100px;
+            /* تحديد حجم الصورة في المعاينة */
+            margin-right: 10px;
+            /* إضافة مسافة بين الصور */
+        }
+    </style>
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -44,7 +53,7 @@
                     {{-- <p class="mb-2">It is Very Easy to Customize and it uses in your website apllication.</p> --}}
                 </div>
                 <div class="card-body pt-0">
-                    <form action="{{ route('dashboard.products.store') }}" method="POST">
+                    <form action="{{ route('dashboard.products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -160,8 +169,9 @@
 
                         <div class="form-group col-12 mb-3">
                             <label for="">رفع صور المنتج</label>
-                            <input id="demo" type="file" name="files"
-                                accept=".jpg, .png, image/jpeg, image/png, html, zip, css,js" multiple>
+                            <input id="fileInput" onchange="loadFiles(event)" class="dropify" type="file"
+                                name="photos[]" accept=".jpg, .png, image/jpeg, image/png" multiple>
+                            <div id="imagePreview" class="my-3"></div>
                         </div>
 
 
@@ -225,6 +235,34 @@
 
             // عرض السعر بعد الخصم
             $("#after_discount").val(after_discount.toFixed(2));
+        });
+    </script>
+
+    {{-- photo --}}
+    <script>
+        function loadFiles(event) {
+            const files = event.target.files; // الحصول على جميع الملفات المرفوعة
+            const previewContainer = document.getElementById('imagePreview');
+            previewContainer.innerHTML = ''; // إعادة تعيين محتوى المعاينة
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result; // تعيين مصدر الصورة
+                    img.classList.add('rounded-circle', 'avatar-xl', 'my-2'); // إضافة الفئات المطلوبة
+                    previewContainer.appendChild(img); // إضافة الصورة إلى حاوية المعاينة
+                };
+
+                reader.readAsDataURL(file); // قراءة الصورة كـ Data URL
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.dropify').dropify(); // تهيئة Dropify
         });
     </script>
 

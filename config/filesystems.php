@@ -47,7 +47,7 @@ return [
         //All Image In Application
         'upload_image' => [
             'driver' => 'local',
-            'root' => public_path('dashboard/assets/uploads'),
+            'root' => public_path('uploads'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],

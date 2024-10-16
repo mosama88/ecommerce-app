@@ -70,6 +70,38 @@ trait UploadTrait
     }
 
 
+    public function verifyAndStoreMultiImages(Request $request, $inputname, $foldername, $disk, $imageable_id, $imageable_type)
+{
+    // التحقق من وجود ملف بالاسم المحدد
+    if ($request->hasFile($inputname)) {
+        // حلقة للتعامل مع كل صورة
+        foreach ($request->file($inputname) as $photo) {
+            // Check img
+            if (!$photo->isValid()) {
+                session()->flash('message', 'Invalid Image!');
+                return redirect()->back()->withInput();
+            }
+
+            // إعداد اسم الملف
+            $name = Str::slug($request->input('title')); // استخدام عنوان المنتج بدلاً من النوع
+            $filename = $name . '_' . time() . '_' . rand(1000, 9999) . '.' . $photo->getClientOriginalExtension();
+
+            // إدخال الصورة في قاعدة البيانات
+            $Image = new Image();
+            $Image->filename = $filename;
+            $Image->imageable_id = $imageable_id;
+            $Image->imageable_type = $imageable_type;
+            $Image->save();
+
+            // رفع الصورة
+            $photo->storeAs($foldername, $filename, $disk);
+        }
+    }
+
+    return null;
+}
+
+
 
     public function Delete_attachment($disk, $path, $imageId)
     {
