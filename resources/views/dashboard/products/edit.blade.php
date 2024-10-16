@@ -53,18 +53,26 @@
                     {{-- <p class="mb-2">It is Very Easy to Customize and it uses in your website apllication.</p> --}}
                 </div>
                 <div class="card-body pt-0">
-                    <form action="{{ route('dashboard.products.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.products.update', $info['id']) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group mb-3">
                                     <label for="exampleInputTtile">عنوان المنتج</label>
-                                    <input type="text" name="title" id="title" class="form-control"
-                                        id="exampleInputTtile" placeholder="أدخل وصف المنتج">
+                                    <input type="text" value="{{ old('title') }}" name="title" id="title"
+                                        class="form-control" id="exampleInputTtile" placeholder="أدخل وصف المنتج">
+                                    @error('title')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="">وصف المنتج</label>
-                                    <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3"></textarea>
+                                    <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3">{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -72,33 +80,50 @@
                         <div class="row">
                             <div class="form-group col-4 mb-3">
                                 <label for="exampleInputprice">سعر المنتج</label>
-                                <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="price"
-                                    id="price" class="form-control" id="exampleInputprice"
-                                    placeholder="أدخل سعر المنتج">
+                                <input value="{{ old('price') }}" type="text"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="price" id="price"
+                                    class="form-control" id="exampleInputprice" placeholder="أدخل سعر المنتج">
+                                @error('price')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-4 mb-3">
                                 <label for="exampleInputdiscount_percentage">نسبة الخصم %</label>
-                                <input type="number" name="discount_percentage" value="0" id="discount_percentage"
+                                <input value="{{ old('discount_percentage') }}" type="number" name="discount_percentage"
+                                    value="0" id="discount_percentage"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" class="form-control"
                                     id="exampleInputdiscount_percentage">
+                                @error('discount_percentage')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-4 mb-3 related_Price">
                                 <label for="exampleInputafter_discount">السعر بعد الخصم</label>
-                                <input readonly type="text" name="after_discount" id="after_discount" value="0"
-                                    class="form-control" id="exampleInputafter_discount">
+                                <input readonly value="{{ old('after_discount') }}" type="text" name="after_discount"
+                                    id="after_discount" value="0" class="form-control" id="exampleInputafter_discount">
+                                @error('after_discount')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputqty">عدد المنتج</label>
-                                <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="qty"
-                                    id="qty" class="form-control" id="exampleInputqty" placeholder="أدخل عدد المنتج">
+                                <input value="{{ old('qty') }}" type="text"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="qty" id="qty"
+                                    class="form-control" id="exampleInputqty" placeholder="أدخل عدد المنتج">
+                                @error('qty')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputsku">رقم المنتج</label>
-                                <input type="text" name="sku" id="sku" class="form-control"
-                                    id="exampleInputsku" placeholder="أدخل رقم المنتج">
+                                <input value="{{ old('sku') }}" type="text" name="sku" id="sku"
+                                    class="form-control" id="exampleInputsku" placeholder="أدخل رقم المنتج">
+                                @error('sku')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                         </div>
@@ -111,12 +136,17 @@
                                     <option value="" selected>أختر المنتج الفرعى</option>
                                     @if (!@empty($other['sub_categories']) && @isset($other['sub_categories']))
                                         @foreach ($other['sub_categories'] as $sub_cat)
-                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                            <option value="{{ $sub_cat['id'] }}"
+                                                {{ old('sub_category_id') == $sub_cat->id ? 'selected' : '' }}>
+                                                {{ $sub_cat['name'] }}</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
                                     @endif
                                 </select>
+                                @error('sub_category_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group col-6 mb-3">
@@ -125,13 +155,18 @@
                                     <!--placeholder-->
                                     <option value="" selected>أختر المقاس</option>
                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
-                                        @foreach ($other['sizes'] as $sub_cat)
-                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @foreach ($other['sizes'] as $size)
+                                            <option value="{{ $size['id'] }}"
+                                                {{ old('size_id') == $size->id ? 'selected' : '' }}>{{ $size['name'] }}
+                                            </option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
                                     @endif
                                 </select>
+                                @error('size_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
 
@@ -141,13 +176,18 @@
                                     <!--placeholder-->
                                     <option value="" selected>أختر اللون</option>
                                     @if (!@empty($other['colors']) && @isset($other['colors']))
-                                        @foreach ($other['colors'] as $sub_cat)
-                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @foreach ($other['colors'] as $color)
+                                            <option value="{{ $color['id'] }}"
+                                                {{ old('size_id') == $size->id ? 'selected' : '' }}>{{ $color['name'] }}
+                                            </option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
                                     @endif
                                 </select>
+                                @error('color_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
 
@@ -157,13 +197,18 @@
                                     <!--placeholder-->
                                     <option value="" selected>أختر العلامة التجارية</option>
                                     @if (!@empty($other['brands']) && @isset($other['brands']))
-                                        @foreach ($other['brands'] as $sub_cat)
-                                            <option value="{{ $sub_cat['id'] }}">{{ $sub_cat['name'] }}</option>
+                                        @foreach ($other['brands'] as $brand)
+                                            <option value="{{ $brand['id'] }}"
+                                                {{ old('brand_id') == $brand->id ? 'selected' : '' }}>{{ $brand['name'] }}
+                                            </option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
                                     @endif
                                 </select>
+                                @error('brand_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -172,11 +217,14 @@
                             <input id="fileInput" onchange="loadFiles(event)" class="dropify" type="file"
                                 name="photos[]" accept=".jpg, .png, image/jpeg, image/png" multiple>
                             <div id="imagePreview" class="my-3"></div>
+                            @error('photos')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
 
                         <div class="form-group text-center col-12 mb-3">
-                            <button type="submit" class="btn btn-primary btn-md mt-3 mb-0">تعديل المنتج</button>
+                            <button type="submit" class="btn btn-primary btn-md mt-3 mb-0">أضافة المنتج</button>
                         </div>
 
                     </form>
