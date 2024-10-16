@@ -61,15 +61,16 @@
                             <div class="col-12">
                                 <div class="form-group mb-3">
                                     <label for="exampleInputTtile">عنوان المنتج</label>
-                                    <input type="text" value="{{ old('title') }}" name="title" id="title"
-                                        class="form-control" id="exampleInputTtile" placeholder="أدخل وصف المنتج">
+                                    <input type="text" value="{{ old('title', $info['title']) }}" name="title"
+                                        id="title" class="form-control" id="exampleInputTtile"
+                                        placeholder="أدخل وصف المنتج">
                                     @error('title')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="">وصف المنتج</label>
-                                    <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3">{{ old('description') }}</textarea>
+                                    <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3">{{ old('description', $info['description']) }}</textarea>
                                     @error('description')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -80,7 +81,7 @@
                         <div class="row">
                             <div class="form-group col-4 mb-3">
                                 <label for="exampleInputprice">سعر المنتج</label>
-                                <input value="{{ old('price') }}" type="text"
+                                <input value="{{ old('price', $info['price']) }}" type="text"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="price" id="price"
                                     class="form-control" id="exampleInputprice" placeholder="أدخل سعر المنتج">
                                 @error('price')
@@ -89,8 +90,8 @@
                             </div>
                             <div class="form-group col-4 mb-3">
                                 <label for="exampleInputdiscount_percentage">نسبة الخصم %</label>
-                                <input value="{{ old('discount_percentage') }}" type="number" name="discount_percentage"
-                                    value="0" id="discount_percentage"
+                                <input value="{{ old('discount_percentage', $info['discount_percentage']) }}"
+                                    type="number" name="discount_percentage" value="0" id="discount_percentage"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" class="form-control"
                                     id="exampleInputdiscount_percentage">
                                 @error('discount_percentage')
@@ -99,8 +100,9 @@
                             </div>
                             <div class="form-group col-4 mb-3 related_Price">
                                 <label for="exampleInputafter_discount">السعر بعد الخصم</label>
-                                <input readonly value="{{ old('after_discount') }}" type="text" name="after_discount"
-                                    id="after_discount" value="0" class="form-control" id="exampleInputafter_discount">
+                                <input readonly value="{{ old('after_discount', $info['after_discount']) }}" type="text"
+                                    name="after_discount" id="after_discount" value="0" class="form-control"
+                                    id="exampleInputafter_discount">
                                 @error('after_discount')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -110,7 +112,7 @@
                         <div class="row">
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputqty">عدد المنتج</label>
-                                <input value="{{ old('qty') }}" type="text"
+                                <input value="{{ old('qty', $info['qty']) }}" type="text"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" name="qty" id="qty"
                                     class="form-control" id="exampleInputqty" placeholder="أدخل عدد المنتج">
                                 @error('qty')
@@ -119,7 +121,7 @@
                             </div>
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputsku">رقم المنتج</label>
-                                <input value="{{ old('sku') }}" type="text" name="sku" id="sku"
+                                <input value="{{ old('sku', $info['sku']) }}" type="text" name="sku" id="sku"
                                     class="form-control" id="exampleInputsku" placeholder="أدخل رقم المنتج">
                                 @error('sku')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -137,7 +139,7 @@
                                     @if (!@empty($other['sub_categories']) && @isset($other['sub_categories']))
                                         @foreach ($other['sub_categories'] as $sub_cat)
                                             <option value="{{ $sub_cat['id'] }}"
-                                                {{ old('sub_category_id') == $sub_cat->id ? 'selected' : '' }}>
+                                                @if (old('sub_category_id', $info['sub_category_id']) == $sub_cat->id) selected="selected" @endif>
                                                 {{ $sub_cat['name'] }}</option>
                                         @endforeach
                                     @else
@@ -157,8 +159,8 @@
                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
                                         @foreach ($other['sizes'] as $size)
                                             <option value="{{ $size['id'] }}"
-                                                {{ old('size_id') == $size->id ? 'selected' : '' }}>{{ $size['name'] }}
-                                            </option>
+                                                @if (old('size_id', $info['size_id']) == $size->id) selected="selected" @endif>
+                                                {{ $size['name'] }}</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
@@ -178,8 +180,8 @@
                                     @if (!@empty($other['colors']) && @isset($other['colors']))
                                         @foreach ($other['colors'] as $color)
                                             <option value="{{ $color['id'] }}"
-                                                {{ old('size_id') == $size->id ? 'selected' : '' }}>{{ $color['name'] }}
-                                            </option>
+                                                @if (old('color_id', $info['color_id']) == $color->id) selected="selected" @endif>
+                                                {{ $color['name'] }}</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
@@ -199,8 +201,8 @@
                                     @if (!@empty($other['brands']) && @isset($other['brands']))
                                         @foreach ($other['brands'] as $brand)
                                             <option value="{{ $brand['id'] }}"
-                                                {{ old('brand_id') == $brand->id ? 'selected' : '' }}>{{ $brand['name'] }}
-                                            </option>
+                                                @if (old('brand_id', $info['brand_id']) == $brand->id) selected="selected" @endif>
+                                                {{ $brand['name'] }}</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
