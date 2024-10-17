@@ -108,7 +108,7 @@
 
                                             <!-- عرض اللون بناءً على الكود الخاص باللون -->
                                             <span class="colorinput-color" style="background-color: {{ $color->hex_code }};">
-                                                {{ $color->name }}
+                                              
                                             </span>
                                         </label>
                                     </div>
