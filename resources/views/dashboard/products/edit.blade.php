@@ -132,8 +132,29 @@
 
                         <div class="row">
 
-                            <div class="form-group col-6 mb-3">
-                                <label for="">المنتج الفرعى</label>
+                            <div class="form-group col-4 mb-3">
+                                <label for="">الفئة</label>
+                                <select name="category_id" id="category_id" class="form-control select2">
+                                    <option value="" selected>أختر الفئة</option>
+                                    @if (!@empty($other['categories']) && @isset($other['categories']))
+                                        @foreach ($other['categories'] as $cat)
+                                            <option value="{{ $cat['id'] }}"
+                                                {{ old('sub_category_id') == $cat->id ? 'selected' : '' }}>
+                                                {{ $cat['name'] }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
+                                </select>
+                                @error('sub_category_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+
+                            <div class="form-group col-4 mb-3" id="subCategoryDiv">
+                                <label for="">الفئة الفرعية</label>
                                 <select name="sub_category_id" id="sub_category_id" class="form-control select2">
                                     <option value="" selected>أختر المنتج الفرعى</option>
                                     @if (!@empty($other['sub_categories']) && @isset($other['sub_categories']))
@@ -151,7 +172,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-6 mb-3">
+                            <div class="form-group col-4 mb-3">
                                 <label for="">المقاس</label>
                                 <select multiple="multiple" name="size_id[]" id="size_id"
                                     class="testselect2 SumoUnder">
@@ -327,6 +348,40 @@
         $(document).ready(function() {
             $('.dropify').dropify(); // تهيئة Dropify
         });
+    </script>
+
+    <script>
+        $(document).on('change', '#category_id', function(e) {
+            getSubCategory();
+        });
+
+        function getSubCategory() {
+            var category_id = $("#category_id").val();
+            $.ajax({
+                url: '{{ route('dashboard.products.getSubCategory') }}',
+                type: 'POST',
+                dataType: 'json', // استخدام 'json' لتسهيل المعالجة
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    category_id: category_id
+                },
+                success: function(data) {
+                    var subCategorySelect = $("#sub_category_id");
+                    subCategorySelect.empty(); // تفريغ القائمة الحالية
+                    subCategorySelect.append(
+                        '<option value="" selected>أختر الفئة الفرعية</option>'); // إضافة الخيار الافتراضي
+
+                    // ملء الخيارات الجديدة
+                    $.each(data, function(key, value) {
+                        subCategorySelect.append('<option value="' + value.id + '">' + value.name +
+                            '</option>');
+                    });
+                },
+                error: function() {
+                    alert("عفوا لقد حدث خطأ ");
+                }
+            });
+        }
     </script>
 
 @endsection

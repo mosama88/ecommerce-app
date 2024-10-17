@@ -105,6 +105,7 @@ class ProductController extends Controller
     {
         $info = Product::findOrFail($id);
         $other['sub_categories'] = SubCategory::with('category:id,name')->get();
+        $other['categories'] = Category::get();
         $other['brands'] = Brand::get();
         $other['colors'] = Color::get();
         $other['sizes'] = Size::get();
