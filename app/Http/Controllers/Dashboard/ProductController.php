@@ -34,6 +34,7 @@ class ProductController extends Controller
     public function create()
     {
         $other['sub_categories'] = SubCategory::with('category:id,name')->get();
+        $other['categories'] = Category::get();
         $other['brands'] = Brand::get();
         $other['colors'] = Color::get();
         $other['sizes'] = Size::get();
@@ -173,5 +174,24 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function getSubCategory(Request $request)
+    {
+        if ($request->ajax()) {
+            $category_id = $request->category_id;
+
+            // استرجاع الفئات الفرعية بناءً على ID الفئة
+            $other['subCategories'] = SubCategory::where('category_id', $category_id)
+                ->where('com_code', auth()->user()->com_code)
+                ->orderBy('id', 'ASC')
+                ->get(['id', 'name']);
+
+            // إرجاع البيانات بتنسيق JSON
+            return response()->json($other['subCategories']);
+        }
+
+        return response()->json(['error' => 'Invalid Request'], 400); // إذا لم يكن الطلب AJAX
     }
 }

@@ -40,41 +40,28 @@
                     <div class="row row-sm ">
                         <div class=" col-xl-5 col-lg-12 col-md-12">
                             <div class="preview-pic tab-content">
-                                <div class="tab-pane active" id="pic-1"><img
-                                        src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-5.png') }}"
-                                        alt="image" /></div>
-                                <div class="tab-pane" id="pic-2"><img
-                                        src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-2.png') }}"
-                                        alt="image" /></div>
-                                <div class="tab-pane" id="pic-3"><img
-                                        src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-3.png') }}"
-                                        alt="image" /></div>
-                                <div class="tab-pane" id="pic-4"><img
-                                        src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-4.png') }}"
-                                        alt="image" /></div>
-                                <div class="tab-pane" id="pic-5"><img
-                                        src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-1.png') }}"
-                                        alt="image" /></div>
+                                <div class="tab-pane active" id="pic-1">
+                                    @if ($info->images->isNotEmpty())
+                                        <img id="main-image"
+                                            src="{{ asset('uploads/products/photo/' . $info->images[0]->filename) }}"
+                                            alt="">
+                                    @else
+                                        <img src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-3.png') }}"
+                                            alt="">
+                                    @endif
+                                </div>
                             </div>
+
                             <ul class="preview-thumbnail nav nav-tabs">
-                                <li class="active"><a data-target="#pic-1" data-toggle="tab"><img
-                                            src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-5.png') }}"
-                                            alt="image" /></a>
-                                </li>
-                                <li><a data-target="#pic-2" data-toggle="tab"><img
-                                            src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-2.png') }}"
-                                            alt="image" /></a>
-                                </li>
-                                <li><a data-target="#pic-3" data-toggle="tab"><img
-                                            src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-3.png') }}"
-                                            alt="image" /></a>
-                                </li>
-                                <li><a data-target="#pic-4" data-toggle="tab"><img
-                                            src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-4.png') }}"
-                                            alt="image" /></a></li>
-                                <li><a data-target="#pic-5" data-toggle="tab"><img
-                                            src="{{ URL::asset('dashboard/assets/img/ecommerce/shirt-1.png') }}"
-                                            alt="image" /></a></li>
+                                @foreach ($info->images as $image)
+                                    <li class="{{ $loop->first ? 'active' : '' }}">
+                                        <a data-target="#pic-{{ $loop->index + 1 }}" data-toggle="tab" class="thumbnail"
+                                            data-img="{{ asset('uploads/products/photo/' . $image->filename) }}">
+                                            <img src="{{ asset('uploads/products/photo/' . $image->filename) }}"
+                                                alt="image" />
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="details col-xl-7 col-lg-12 col-md-12 mt-4 mt-xl-0">
@@ -124,8 +111,7 @@
                                     </div>
                                     <div class="mr-2">
                                         <label class="colorinput">
-                                            <input name="color" type="radio" value="indigo"
-                                                class="colorinput-input">
+                                            <input name="color" type="radio" value="indigo" class="colorinput-input">
                                             <span class="colorinput-color bg-secondary"></span>
                                         </label>
                                     </div>
@@ -329,4 +315,14 @@
     <!-- Internal Nice-select js-->
     <script src="{{ URL::asset('dashboard/assets/plugins/jquery-nice-select/js/jquery.nice-select.js') }}"></script>
     <script src="{{ URL::asset('dashboard/assets/plugins/jquery-nice-select/js/nice-select.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.thumbnail').on('click', function(e) {
+                e.preventDefault();
+                var imgSrc = $(this).data('img'); // الحصول على مسار الصورة من الـ data attribute
+                $('#main-image').attr('src', imgSrc); // تحديث الصورة الكبيرة
+            });
+        });
+    </script>
 @endsection

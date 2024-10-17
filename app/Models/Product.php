@@ -19,6 +19,13 @@ class Product extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'imageable_id', 'id')->where('imageable_type', 'App\Models\Product');
+    }
+
+
+
     public function createdBy()
     {
         return $this->belongsTo(Admin::class, 'created_by');

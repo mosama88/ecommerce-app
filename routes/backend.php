@@ -27,12 +27,14 @@ Route::get('/admin/dashboards', function () {
 })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
 Route::middleware(['auth:admin', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
-Route::resource('categories', CategoryController::class);
-Route::resource('colors', ColorController::class);
-Route::resource('products', ProductController::class);
-Route::resource('sizes', SizeController::class);
-Route::resource('sub_categories', SubCategoryController::class);
-Route::resource('brands', BrandController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('colors', ColorController::class);
+    Route::resource('products', ProductController::class);
+    Route::post("/getSubCategory", [ProductController::class, 'getSubCategory'])->name('products.getSubCategory');
+
+    Route::resource('sizes', SizeController::class);
+    Route::resource('sub_categories', SubCategoryController::class);
+    Route::resource('brands', BrandController::class);
 });
 
 
