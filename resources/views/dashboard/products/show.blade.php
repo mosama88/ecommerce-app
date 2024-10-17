@@ -86,49 +86,34 @@
                                     votes)</strong>
                             </p>
                             <div class="sizes d-flex">sizes:
-                                <span class="size d-flex" data-toggle="tooltip" title="small"><label
-                                        class="rdiobox mb-0"><input checked="" name="rdio" type="radio"> <span
-                                            class="font-weight-bold">s</span></label></span>
-                                <span class="size d-flex" data-toggle="tooltip" title="medium"><label
-                                        class="rdiobox mb-0"><input name="rdio" type="radio">
-                                        <span>m</span></label></span>
-                                <span class="size d-flex" data-toggle="tooltip" title="large"><label
-                                        class="rdiobox mb-0"><input name="rdio" type="radio">
-                                        <span>l</span></label></span>
-                                <span class="size d-flex" data-toggle="tooltip" title="extra-large"><label
-                                        class="rdiobox mb-0"><input name="rdio" type="radio">
-                                        <span>xl</span></label></span>
+                                @foreach ($other['sizes'] as $size)
+                                    <span class="size d-flex" data-toggle="tooltip" title="{{ $size->name }}">
+                                        <label class="rdiobox mb-0">
+                                            <input value="{{ $size->id }}" name="rdio" type="radio"
+                                                {{ old('color') == $size->id ? 'checked' : '' }}>
+                                            <span class="font-weight-bold">{{ $size->name }}</span>
+                                        </label>
+                                    </span>
+                                @endforeach
                             </div>
                             <div class="colors d-flex mr-3 mt-2">
                                 <span class="mt-2">colors:</span>
                                 <div class="row gutters-xs mr-4">
+                                    @foreach ($other['colors'] as $color)
                                     <div class="mr-2">
                                         <label class="colorinput">
-                                            <input name="color" type="radio" value="azure" class="colorinput-input"
-                                                checked="">
-                                            <span class="colorinput-color bg-danger"></span>
+                                            <input name="color" type="radio" value="{{ $color->id }}"
+                                                class="colorinput-input"
+                                                {{ old('color') == $color->id ? 'checked' : '' }}>
+
+                                            <!-- عرض اللون بناءً على الكود الخاص باللون -->
+                                            <span class="colorinput-color" style="background-color: {{ $color->hex_code }};">
+                                                {{ $color->name }}
+                                            </span>
                                         </label>
                                     </div>
-                                    <div class="mr-2">
-                                        <label class="colorinput">
-                                            <input name="color" type="radio" value="indigo" class="colorinput-input">
-                                            <span class="colorinput-color bg-secondary"></span>
-                                        </label>
-                                    </div>
-                                    <div class="mr-2">
-                                        <label class="colorinput">
-                                            <input name="color" type="radio" value="purple"
-                                                class="colorinput-input">
-                                            <span class="colorinput-color bg-dark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="mr-2">
-                                        <label class="colorinput">
-                                            <input name="color" type="radio" value="pink"
-                                                class="colorinput-input">
-                                            <span class="colorinput-color bg-pink"></span>
-                                        </label>
-                                    </div>
+                                @endforeach
+
                                 </div>
                             </div>
                             <div class="d-flex  mt-2">

@@ -41,10 +41,7 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'sub_category_id');
     }
 
-    public function size()
-    {
-        return $this->belongsTo(Size::class, 'size_id');
-    }
+
 
     public function brand()
     {
@@ -59,6 +56,6 @@ class Product extends Model
 
     public function size_product()
     {
-        return $this->belongsToMany(Color::class, 'size_product', 'product_id', 'size_id');
+        return $this->belongsToMany(Size::class, 'size_product', 'product_id', 'size_id');
     }
 }

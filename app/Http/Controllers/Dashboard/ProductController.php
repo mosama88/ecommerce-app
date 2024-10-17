@@ -90,11 +90,13 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
+        $com_code = auth()->user()->com_code;
         $info = Product::findOrFail($id);
         $other['sub_categories'] = SubCategory::with('category:id,name')->get();
         $other['brands'] = Brand::get();
-        $other['colors'] = Color::get();
-        $other['sizes'] = Size::get();
+        $other['sizes'] = $info->size_product; // المقاسات المرتبطة بالمنتج فقط
+        $other['colors'] = $info->color_product; // الألوان المرتبطة بالمنتج فقط
+
         return view('dashboard.products.show', compact('other', 'info'));
     }
 
