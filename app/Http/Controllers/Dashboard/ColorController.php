@@ -33,6 +33,7 @@ class ColorController extends Controller
             DB::beginTransaction();
             $com_code = auth()->user()->com_code;
             $dataToInsert['name'] = $request->name;
+            $dataToInsert['hex_code'] = $request->hex_code; // إضافة hex_code
             $dataToInsert['created_by'] = auth()->user()->id;
             $dataToInsert['com_code'] = $com_code;
 
@@ -74,6 +75,7 @@ class ColorController extends Controller
 
             DB::beginTransaction();
             $dataToUpdate['name'] = $request->name;
+            $dataToUpdate['hex_code'] = $request->hex_code; // إضافة hex_code
             $dataToUpdate['updated_by'] = auth()->user()->id;
             $dataToUpdate['com_code'] = $com_code;
 

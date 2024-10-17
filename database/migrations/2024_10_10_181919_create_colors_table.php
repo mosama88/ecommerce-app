@@ -22,18 +22,19 @@ return new class extends Migration
             $table->timestamps();
         });
         // الألوان مع التفاصيل باللغة العربية
-        $colors = [
-            ['name' => 'أحمر', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'أزرق', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'أخضر', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'أصفر', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'برتقالي', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'أرجواني', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'أسود', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'أبيض', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'وردي', 'created_by' => 1, 'com_code' => 1],
-            ['name' => 'بني', 'created_by' => 1, 'com_code' => 1],
-        ];
+     // الألوان مع الأكواد اللونية والتفاصيل
+     $colors = [
+        ['name' => 'أحمر', 'hex_code' => '#FF0000', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'أزرق', 'hex_code' => '#0000FF', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'أخضر', 'hex_code' => '#008000', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'أصفر', 'hex_code' => '#FFFF00', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'برتقالي', 'hex_code' => '#FFA500', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'أرجواني', 'hex_code' => '#800080', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'أسود', 'hex_code' => '#000000', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'أبيض', 'hex_code' => '#FFFFFF', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'وردي', 'hex_code' => '#FFC0CB', 'created_by' => 1, 'com_code' => 1],
+        ['name' => 'بني', 'hex_code' => '#A52A2A', 'created_by' => 1, 'com_code' => 1],
+    ];
 
         // إدخال البيانات في قاعدة البيانات
         DB::table('colors')->insert($colors);

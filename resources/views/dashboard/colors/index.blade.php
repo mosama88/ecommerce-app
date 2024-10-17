@@ -158,54 +158,49 @@
     </script>
 
 
-<script>
-    $('#ajaxFormColor').on('submit', function(e) {
-    e.preventDefault();
+    <script>
+        $(document).ready(function() {
+            // عند إرسال النموذج
+            $('#ajaxFormColor').on('submit', function(e) {
+                e.preventDefault(); // منع إعادة تحميل الصفحة
 
-    var formData = $(this).serialize();
+                // إعادة ضبط الأخطاء قبل الإرسال
+                $('#nameError').text('');
+                $('#hexCodeError').text('');
 
-    $.ajax({
-        url: $(this).attr('action'),
-        method: $(this).attr('method'),
-        data: formData,
-        success: function(response) {
-            if (response.success) {
-                // إخفاء الـ modal فقط عند نجاح العملية
-                $('#modaldemo8').modal('hide');
+                // جلب بيانات النموذج
+                var formData = $(this).serialize();
 
-                // عرض رسالة النجاح
-                Swal.fire({
-                    icon: 'success',
-                    title: 'تم أضافة اللون بنجاح',
-                    text: response.success,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false
+                // إرسال الطلب باستخدام AJAX
+                $.ajax({
+                    url: $(this).attr('action'), // جلب الـ URL من الخاصية action
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+                            // عرض رسالة نجاح
+                            alert(response.success);
+                            // هنا يمكنك إعادة تحميل الصفحة أو إغلاق الـ modal
+                            location.reload(); // على سبيل المثال
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            // عرض الأخطاء في حالة حدوث خطأ في التحقق من صحة البيانات
+                            var errors = xhr.responseJSON.errors;
+                            if (errors.name) {
+                                $('#nameError').text(errors.name[0]);
+                            }
+                            if (errors.hex_code) {
+                                $('#hexCodeError').text(errors.hex_code[0]);
+                            }
+                        } else {
+                            alert('حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.');
+                        }
+                    }
                 });
-
-                // إعادة تحميل الصفحة بعد انتهاء العملية مباشرة
-                setTimeout(function() {
-                    location.reload(); // إعادة تحميل الصفحة بعد وقت محدد
-                }, 1000); // 1000 مللي ثانية (1 ثانية)
-            }
-        },
-        error: function(xhr) {
-            if (xhr.status === 422) {
-                var errors = xhr.responseJSON.errors;
-                if (errors.name) {
-                    $('#nameError').text(errors.name[0]);
-                }
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'حدث خطأ',
-                    text: 'عفوا حدث خطأ ما. الرجاء المحاولة مرة أخرى.'
-                });
-            }
-        }
-    });
-});
-
-</script>
+            });
+        });
+    </script>
 
 @endsection

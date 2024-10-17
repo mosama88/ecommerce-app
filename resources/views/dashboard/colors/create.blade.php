@@ -15,6 +15,11 @@
                                 <input type="text" name="name" id="name" class="form-control">
                                 <span class="text-danger" id="nameError"></span> <!-- مكان عرض الخطأ -->
                             </div>
+                            <div class="form-group col-12">
+                                <label for="hex_code">اللون</label>
+                                <input type="color" name="hex_code" id="hex_code" class="form-control">
+                                <span class="text-danger" id="hexCodeError"></span> <!-- مكان عرض الخطأ -->
+                            </div>
                         </div>
 
                         <div class="modal-footer">
