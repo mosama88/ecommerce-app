@@ -89,7 +89,12 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $info = Product::findOrFail($id);
+        $other['sub_categories'] = SubCategory::with('category:id,name')->get();
+        $other['brands'] = Brand::get();
+        $other['colors'] = Color::get();
+        $other['sizes'] = Size::get();
+        return view('dashboard.products.show', compact('other', 'info'));
     }
 
     /**
@@ -142,25 +147,16 @@ class ProductController extends Controller
                 $product->size_product()->sync($request->size_id); // يجب أن تكون العلاقة معرفة في الموديل
             }
 
-            // حذف الصور القديمة إذا كانت موجودة
-            if ($request->hasFile('photos')) {
-                // جلب الصور القديمة المرتبطة بالمنتج
-                $oldPhotos = $product->images;
-
-                // حذف الصور من المجلد والسجلات من قاعدة البيانات
-                foreach ($oldPhotos as $photo) {
-                    // حذف الصورة من المجلد
-                    $imagePath = public_path('uploads/products/photo/' . $photo->filename);
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath); // حذف الملف
-                    }
-
-                    // حذف السجل من قاعدة البيانات
-                    $photo->delete();
+            // التحقق من وجود الصورة وتحديثها إذا لزم الأمر
+            if ($request->has('photo')) {
+                // حذف الصورة القديمة
+                if ($product->image) {
+                    $old_img = $product->image->filename;
+                    $this->Delete_attachment('upload_image', 'products/photo/' . $old_img, $request->id);
+                    $product->image()->delete(); // حذف السجل القديم للصورة من قاعدة البيانات
                 }
-
-                // رفع الصور الجديدة باستخدام دالة verifyAndStoreMultiImages
-                $this->verifyAndStoreMultiImages($request, 'photos', 'products/photo/', 'upload_image', $product->id, 'App\Models\Product');
+                // رفع الصورة الجديدة وتخزينها في قاعدة البيانات
+                $this->verifyAndStoreMultiImages($request, 'photo', 'products/photo/', 'upload_image', $product->id, 'App\Models\Product');
             }
 
             DB::commit();

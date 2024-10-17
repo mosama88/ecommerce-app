@@ -235,7 +235,7 @@
                                                 alt="product-image">
                                         @endif
 
-                                        <a href="{{ route('dashboard.products.edit', $info->id) }}" class="adtocart"> <i
+                                        <a href="{{ route('dashboard.products.show', $info->id) }}" class="adtocart"> <i
                                                 class="las la-shopping-cart "></i>
                                         </a>
                                     </div>
