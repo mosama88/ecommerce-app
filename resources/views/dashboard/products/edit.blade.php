@@ -69,6 +69,15 @@
                                     @enderror
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="">وصف مختصر</label>
+                                    <textarea class="form-control" name="mini_description" id="mini_description" placeholder="اكتب وصف مختصر عن المنتج"
+                                        rows="3">{{ old('mini_description', $info['mini_description']) }}</textarea>
+                                    @error('mini_description')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
                                     <label for="">وصف المنتج</label>
                                     <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3">{{ old('description', $info['description']) }}</textarea>
                                     @error('description')
@@ -121,8 +130,9 @@
                             </div>
                             <div class="form-group col-6 mb-3">
                                 <label for="exampleInputsku">رقم المنتج</label>
-                                <input value="{{ old('sku', $info['sku']) }}" type="text" name="sku" id="sku"
-                                    class="form-control" id="exampleInputsku" placeholder="أدخل رقم المنتج">
+                                <input value="{{ old('sku', $info['sku']) }}" type="text" name="sku"
+                                    id="sku" class="form-control" id="exampleInputsku"
+                                    placeholder="أدخل رقم المنتج">
                                 @error('sku')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

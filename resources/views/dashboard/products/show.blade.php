@@ -80,12 +80,13 @@
                             <h6 class="price">السعر الحالي: <span class="h3 ml-2">
                                     {{ $info['after_discount'] * 1 }} جنية </span>
                             </h6>
-                            <p class="product-description">{{ $info['description'] }}</p>
-                            <p class="vote"><strong>{{ $info['discount'] }}%</strong> of buyers enjoyed this product!
+                            <p class="product-description">{{ $info['mini_description'] }}</p>
+                            <p class="vote"><strong>{{ $info['discount_percentage'] * 1 }}%</strong> من المشترين استمتعوا
+                                بهذا المنتج!
                                 <strong>(87
-                                    votes)</strong>
+                                    الاصوات)</strong>
                             </p>
-                            <div class="sizes d-flex">sizes:
+                            <div class="sizes d-flex">المقاسات:
                                 @foreach ($other['sizes'] as $size)
                                     <span class="size d-flex" data-toggle="tooltip" title="{{ $size->name }}">
                                         <label class="rdiobox mb-0">
@@ -97,24 +98,32 @@
                                 @endforeach
                             </div>
                             <div class="colors d-flex mr-3 mt-2">
-                                <span class="mt-2">colors:</span>
+                                <span class="mt-2">الألوان:</span>
                                 <div class="row gutters-xs mr-4">
                                     @foreach ($other['colors'] as $color)
-                                    <div class="mr-2">
-                                        <label class="colorinput">
-                                            <input name="color" type="radio" value="{{ $color->id }}"
-                                                class="colorinput-input"
-                                                {{ old('color') == $color->id ? 'checked' : '' }}>
+                                        <div class="mr-2">
+                                            <label class="colorinput">
+                                                <input name="color" type="radio" value="{{ $color->id }}"
+                                                    class="colorinput-input"
+                                                    {{ old('color') == $color->id ? 'checked' : '' }}>
 
-                                            <!-- عرض اللون بناءً على الكود الخاص باللون -->
-                                            <span class="colorinput-color" style="background-color: {{ $color->hex_code }};">
-                                              
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endforeach
+                                                <!-- عرض اللون بناءً على الكود الخاص باللون -->
+                                                <span class="colorinput-color"
+                                                    style="background-color: {{ $color->hex_code }};">
+
+                                                </span>
+                                            </label>
+                                        </div>
+                                    @endforeach
 
                                 </div>
+                            </div>
+
+                            <div class="col-6">
+                                التفاصيل: {{ $info['description'] }}
+                            </div>
+                            <div>
+
                             </div>
                             <div class="d-flex  mt-2">
                                 <div class="mt-2 product-title">Quantity:</div>

@@ -66,6 +66,15 @@
                                     @enderror
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="">وصف مختصر</label>
+                                    <textarea class="form-control" name="mini_description" id="mini_description" placeholder="اكتب وصف مختصر عن المنتج"
+                                        rows="3">{{ old('mini_description') }}</textarea>
+                                    @error('mini_description')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
                                     <label for="">وصف المنتج</label>
                                     <textarea class="form-control" name="description" id="description" placeholder="اكتب وصف دقيق عن المنتج" rows="3">{{ old('description') }}</textarea>
                                     @error('description')
@@ -353,7 +362,7 @@
                     var subCategorySelect = $("#sub_category_id");
                     subCategorySelect.empty(); // تفريغ القائمة الحالية
                     subCategorySelect.append(
-                    '<option value="" selected>أختر الفئة الفرعية</option>'); // إضافة الخيار الافتراضي
+                        '<option value="" selected>أختر الفئة الفرعية</option>'); // إضافة الخيار الافتراضي
 
                     // ملء الخيارات الجديدة
                     $.each(data, function(key, value) {
