@@ -153,13 +153,19 @@
 
                             <div class="form-group col-6 mb-3">
                                 <label for="">المقاس</label>
-                                <select name="size_id" id="size_id" class="form-control select2">
+                                <select multiple="multiple" name="size_id[]" id="size_id"
+                                    class="testselect2 SumoUnder">
                                     <!--placeholder-->
-                                    <option value="" selected>أختر المقاس</option>
+                                    <option value="" disabled> -- أختر المقاس --</option>
                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
                                         @foreach ($other['sizes'] as $size)
+                                            @foreach ($info->size_product as $key => $sizePro)
+                                                @php
+                                                    $check[] = $sizePro->id;
+                                                @endphp
+                                            @endforeach
                                             <option value="{{ $size['id'] }}"
-                                                @if (old('size_id', $info['size_id']) == $size->id) selected="selected" @endif>
+                                                {{ in_array($size->id, $check) ? 'selected' : '' }}>
                                                 {{ $size['name'] }}</option>
                                         @endforeach
                                     @else
@@ -172,15 +178,22 @@
                             </div>
 
 
+
                             <div class="form-group col-6 mb-3">
                                 <label for="">اللون</label>
-                                <select name="color_id" id="color_id" class="form-control select2">
+                                <select multiple="multiple" name="color_id[]" id="color_id"
+                                    class="testselect2 SumoUnder">
                                     <!--placeholder-->
-                                    <option value="" selected>أختر اللون</option>
+                                    <option value="" disabled> -- أختر اللون --</option>
                                     @if (!@empty($other['colors']) && @isset($other['colors']))
                                         @foreach ($other['colors'] as $color)
+                                            @foreach ($info->color_product as $key => $colorPro)
+                                                @php
+                                                    $check[] = $colorPro->id;
+                                                @endphp
+                                            @endforeach
                                             <option value="{{ $color['id'] }}"
-                                                @if (old('color_id', $info['color_id']) == $color->id) selected="selected" @endif>
+                                                {{ in_array($color->id, $check) ? 'selected' : '' }}>
                                                 {{ $color['name'] }}</option>
                                         @endforeach
                                     @else

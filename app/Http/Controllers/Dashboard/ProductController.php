@@ -49,25 +49,25 @@ class ProductController extends Controller
             DB::beginTransaction();
             $com_code = auth()->user()->com_code;
 
-            $dataToInsert = [
-                'title' => $request->title,
-                'description' => $request->description,
-                'price' => $request->price,
-                'discount_percentage' => $request->discount_percentage,
-                'after_discount' => $request->after_discount,
-                'qty' => $request->qty,
-                'sku' => $request->sku,
-                'sub_category_id' => $request->sub_category_id,
-                'size_id' => $request->size_id,
-                'color_id' => $request->color_id,
-                'brand_id' => $request->brand_id,
-                'status' => 1,
-                'created_by' => auth()->user()->id,
-                'com_code' => $com_code,
-            ];
+            $dataToInsert['title']  = $request->title;
+            $dataToInsert['mini_description'] = $request->mini_description;
+            $dataToInsert['description'] = $request->description;
+            $dataToInsert['price'] = $request->price;
+            $dataToInsert['discount_percentage'] = $request->discount_percentage;
+            $dataToInsert['after_discount'] = $request->after_discount;
+            $dataToInsert['qty'] = $request->qty;
+            $dataToInsert['sku'] = $request->sku;
+            $dataToInsert['sub_category_id'] = $request->sub_category_id;
+            $dataToInsert['brand_id'] = $request->brand_id;
+            $dataToInsert['status'] = 1;
+            $dataToInsert['created_by'] = auth()->user()->id;
+            $dataToInsert['com_code'] = $com_code;
 
             // إدراج المنتج
             $product = insert(new Product, $dataToInsert);
+
+            $product->color_product()->attach($request->color_id);
+            $product->size_product()->attach($request->size_id);
 
             // تحقق من وجود ملفات الصور في الطلب
             if ($request->hasFile('photos')) {
@@ -108,9 +108,67 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+
+        try {
+            // جلب المنتج المراد تعديله
+            $product = Product::findOrFail($id);
+            DB::beginTransaction();
+            $com_code = auth()->user()->com_code;
+
+            $dataToUpdate['title']  = $request->title;
+            $dataToUpdate['mini_description'] = $request->mini_description;
+            $dataToUpdate['description'] = $request->description;
+            $dataToUpdate['price'] = $request->price;
+            $dataToUpdate['discount_percentage'] = $request->discount_percentage;
+            $dataToUpdate['after_discount'] = $request->after_discount;
+            $dataToUpdate['qty'] = $request->qty;
+            $dataToUpdate['sku'] = $request->sku;
+            $dataToUpdate['sub_category_id'] = $request->sub_category_id;
+            $dataToUpdate['brand_id'] = $request->brand_id;
+            $dataToUpdate['status'] = 1;
+            $dataToUpdate['created_by'] = auth()->user()->id;
+            $dataToUpdate['com_code'] = $com_code;
+
+            // إدراج المنتج
+            $product->update($dataToUpdate);
+
+            // update pivot tABLE
+            if ($request->has('color_id')) {
+                $product->color_product()->sync($request->color_id); // يجب أن تكون العلاقة معرفة في الموديل
+            }
+            if ($request->has('size_id')) {
+                $product->size_product()->sync($request->size_id); // يجب أن تكون العلاقة معرفة في الموديل
+            }
+
+            // حذف الصور القديمة إذا كانت موجودة
+            if ($request->hasFile('photos')) {
+                // جلب الصور القديمة المرتبطة بالمنتج
+                $oldPhotos = $product->images;
+
+                // حذف الصور من المجلد والسجلات من قاعدة البيانات
+                foreach ($oldPhotos as $photo) {
+                    // حذف الصورة من المجلد
+                    $imagePath = public_path('uploads/products/photo/' . $photo->filename);
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath); // حذف الملف
+                    }
+
+                    // حذف السجل من قاعدة البيانات
+                    $photo->delete();
+                }
+
+                // رفع الصور الجديدة باستخدام دالة verifyAndStoreMultiImages
+                $this->verifyAndStoreMultiImages($request, 'photos', 'products/photo/', 'upload_image', $product->id, 'App\Models\Product');
+            }
+
+            DB::commit();
+            return redirect()->route('dashboard.products.index')->with('success', 'تم تحديث المنتج بنجاح');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+        }
     }
 
     /**

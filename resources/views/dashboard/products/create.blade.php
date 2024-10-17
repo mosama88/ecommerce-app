@@ -149,9 +149,9 @@
 
                             <div class="form-group col-6 mb-3">
                                 <label for="">المقاس</label>
-                                <select multiple="multiple" name="size_id" id="size_id" class="testselect2 SumoUnder">
+                                <select multiple="multiple" name="size_id[]" id="size_id" class="testselect2 SumoUnder">
                                     <!--placeholder-->
-                                    <option value="" disabled>أختر المقاس</option>
+                                    <option value="" disabled> -- أختر المقاس --</option>
                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
                                         @foreach ($other['sizes'] as $size)
                                             <option value="{{ $size['id'] }}"
@@ -170,10 +170,10 @@
 
                             <div class="form-group col-6 mb-3">
                                 <label for="">اللون</label>
-                                <select multiple="multiple" name="color_id" id="color_id"
+                                <select multiple="multiple" name="color_id[]" id="color_id"
                                     class="testselect2 SumoUnder">
                                     <!--placeholder-->
-                                    <option value="" disabled>أختر اللون</option>
+                                    <option value="" disabled> -- أختر اللون --</option>
                                     @if (!@empty($other['colors']) && @isset($other['colors']))
                                         @foreach ($other['colors'] as $color)
                                             <option value="{{ $color['id'] }}"
