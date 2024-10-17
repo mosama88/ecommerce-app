@@ -220,7 +220,7 @@
                                         @endif
 
                                         <a href="{{ route('dashboard.products.edit', $info->id) }}" class="adtocart"> <i
-                                                class="far fa-edit fa-sm"></i>
+                                                class="las la-shopping-cart "></i>
                                         </a>
                                     </div>
                                     <div class="text-center pt-3">

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -27,8 +28,11 @@ return new class extends Migration
             ['name' => 'XL', 'created_by' => 1, 'com_code' => 1],
             ['name' => 'XXL', 'created_by' => 1, 'com_code' => 1],
             ['name' => 'XXXL', 'created_by' => 1, 'com_code' => 1],
-
         ];
+
+
+        // إدخال البيانات في قاعدة البيانات
+        DB::table('sizes')->insert($sizes);
     }
 
     /**

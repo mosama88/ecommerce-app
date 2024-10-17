@@ -176,7 +176,7 @@
                                     @if (!@empty($other['colors']) && @isset($other['colors']))
                                         @foreach ($other['colors'] as $color)
                                             <option value="{{ $color['id'] }}"
-                                                {{ old('size_id') == $size->id ? 'selected' : '' }}>{{ $color['name'] }}
+                                                {{ old('size_id') == $color->id ? 'selected' : '' }}>{{ $color['name'] }}
                                             </option>
                                         @endforeach
                                     @else
