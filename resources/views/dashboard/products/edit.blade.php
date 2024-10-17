@@ -140,7 +140,7 @@
                                         @foreach ($other['sub_categories'] as $sub_cat)
                                             <option value="{{ $sub_cat['id'] }}"
                                                 @if (old('sub_category_id', $info['sub_category_id']) == $sub_cat->id) selected="selected" @endif>
-                                                {{ $sub_cat['name'] }}</option>
+                                                {{ $sub_cat['name'] }} => ( {{ $sub_cat->category->name }} ) </option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات

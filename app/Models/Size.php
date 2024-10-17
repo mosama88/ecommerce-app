@@ -22,4 +22,9 @@ class Size extends Model
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'size_product');
+    }
 }

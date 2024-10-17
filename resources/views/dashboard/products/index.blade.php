@@ -14,6 +14,22 @@
             /* يجعل الصورة تغطي المساحة المحددة دون تشويه */
             /* يمكنك إضافة زوايا دائرية إذا أردت */
         }
+
+        .pro-img-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px;
+            /* Adjust height if needed */
+            position: relative;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            /* This ensures the image scales properly */
+        }
     </style>
 @endsection
 @section('page-header')
@@ -203,7 +219,7 @@
                         <div class="col-md-6 col-lg-6 col-xl-4  col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="pro-img-box">
+                                    <div class="pro-img-box d-flex justify-content-center">
                                         <div class="d-flex product-sale">
                                             <div class="badge bg-pink">جديد</div>
                                             <i class="mdi mdi-heart-outline ml-auto wishlist"></i>

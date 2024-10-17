@@ -23,4 +23,10 @@ class Color extends Model
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'color_product');
+    }
 }

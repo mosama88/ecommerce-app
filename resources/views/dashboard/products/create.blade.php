@@ -136,7 +136,7 @@
                                         @foreach ($other['sub_categories'] as $sub_cat)
                                             <option value="{{ $sub_cat['id'] }}"
                                                 {{ old('sub_category_id') == $sub_cat->id ? 'selected' : '' }}>
-                                                {{ $sub_cat['name'] }}</option>
+                                                {{ $sub_cat['name'] }} => ( {{ $sub_cat->category->name }} )</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
@@ -149,9 +149,9 @@
 
                             <div class="form-group col-6 mb-3">
                                 <label for="">المقاس</label>
-                                <select name="size_id" id="size_id" class="form-control select2">
+                                <select multiple="multiple" name="size_id" id="size_id" class="testselect2 SumoUnder">
                                     <!--placeholder-->
-                                    <option value="" selected>أختر المقاس</option>
+                                    <option value="" disabled>أختر المقاس</option>
                                     @if (!@empty($other['sizes']) && @isset($other['sizes']))
                                         @foreach ($other['sizes'] as $size)
                                             <option value="{{ $size['id'] }}"
@@ -170,9 +170,10 @@
 
                             <div class="form-group col-6 mb-3">
                                 <label for="">اللون</label>
-                                <select name="color_id" id="color_id" class="form-control select2">
+                                <select multiple="multiple" name="color_id" id="color_id"
+                                    class="testselect2 SumoUnder">
                                     <!--placeholder-->
-                                    <option value="" selected>أختر اللون</option>
+                                    <option value="" disabled>أختر اللون</option>
                                     @if (!@empty($other['colors']) && @isset($other['colors']))
                                         @foreach ($other['colors'] as $color)
                                             <option value="{{ $color['id'] }}"

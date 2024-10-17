@@ -12,19 +12,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
 
     use UploadTrait;
 
-    
+
     public function index()
     {
         $com_code = auth()->user()->com_code;
 
         $data = getColumnsIndex(new Product(), array("*"), array('com_code' => $com_code), 'id', 'DESC')->get();
-        return view('dashboard.products.index',compact('data'));
+        return view('dashboard.products.index', compact('data'));
     }
 
     /**
@@ -32,12 +33,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $other['sub_categories'] = SubCategory::get();
+        $other['sub_categories'] = SubCategory::with('category:id,name')->get();
         $other['brands'] = Brand::get();
         $other['colors'] = Color::get();
         $other['sizes'] = Size::get();
-        return view('dashboard.products.create',compact('other'));
-
+        return view('dashboard.products.create', compact('other'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
             $com_code = auth()->user()->com_code;
-    
+
             $dataToInsert = [
                 'title' => $request->title,
                 'description' => $request->description,
@@ -65,16 +65,16 @@ class ProductController extends Controller
                 'created_by' => auth()->user()->id,
                 'com_code' => $com_code,
             ];
-    
+
             // إدراج المنتج
             $product = insert(new Product, $dataToInsert);
-    
+
             // تحقق من وجود ملفات الصور في الطلب
             if ($request->hasFile('photos')) {
                 // رفع كل صورة باستخدام دالة verifyAndStoreFile
                 $this->verifyAndStoreMultiImages($request, 'photos', 'products/photo/', 'upload_image', $product->id, 'App\Models\Product');
             }
-    
+
             DB::commit();
             return redirect()->route('dashboard.products.index')->with('success', 'تم أضافة المنتج بنجاح');
         } catch (\Exception $ex) {
@@ -82,7 +82,7 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
         }
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -98,11 +98,11 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $info = Product::findOrFail($id);
-        $other['sub_categories'] = SubCategory::get();
+        $other['sub_categories'] = SubCategory::with('category:id,name')->get();
         $other['brands'] = Brand::get();
         $other['colors'] = Color::get();
         $other['sizes'] = Size::get();
-        return view('dashboard.products.edit',compact('other','info'));
+        return view('dashboard.products.edit', compact('other', 'info'));
     }
 
     /**
